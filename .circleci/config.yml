@@ -9,7 +9,6 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm install -g cypress
             - run: npm ci
             - run: npx cypress test --headless
 workflows:
