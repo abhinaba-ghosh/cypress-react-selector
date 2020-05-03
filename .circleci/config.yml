@@ -1,10 +1,14 @@
 version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1
+
 jobs:
   build-and-test:
-    executor:
-      name: cypress/base-12-6-0
+    docker:
+      # the Docker image with Cypress dependencies
+      - image: cypress/base:12.16.1
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
     steps:
       - checkout
       - node/with-cache:
