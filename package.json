@@ -11,7 +11,7 @@
     "cypress-io"
   ],
   "scripts": {
-    "test": "cypress open"
+    "test": "cypress run --headless"
   },
   "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
   "license": "MIT",
