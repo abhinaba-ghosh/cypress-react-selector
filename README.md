@@ -1,6 +1,6 @@
 # cypress-react-selector
 
-[![Build Status](https://circleci.com/gh/abhinaba-ghosh/cypress-react-selector.svg?branch-=master)](https://app.circleci.com/pipelines/github/abhinaba-ghosh/cypress-react-selector)
+[![Build Status](https://circleci.com/gh/abhinaba-ghosh/cypress-react-selector.svg?style=shield&branch-=master)](https://app.circleci.com/pipelines/github/abhinaba-ghosh/cypress-react-selector)
 
 _cypress-react-selector_ is lightweight plugin to help you to locate web elements in your REACT app using components, props and states.. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
 
