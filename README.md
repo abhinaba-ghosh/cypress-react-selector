@@ -6,6 +6,8 @@ Worry Not! Here We Introduce **Cypress-React-Selector** :hatching_chick:
 
 _cypress-react-selector_ is lightweight plugin to help you to locate web elements in your REACT app using components, props and states.
 
+Internally, cypress-react-selector uses a library called [resq](https://github.com/baruchvlz/resq) to query React's VirtualDOM in order to retrieve the nodes.
+
 ## Install and configure
 
 ### Add as a dependency:

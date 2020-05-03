@@ -21,4 +21,13 @@ describe('It should validate cypress react selector', () => {
       .find('button')
       .should('have.text', '5')
   })
+
+  it('should calculate 7 * 6', () => {
+    cy.react('t', { name: '7' }).click()
+    cy.react('t', { name: 'x' }).click()
+    cy.react('t', { name: '6' }).click()
+    cy.react('t', { name: '=' }).click()
+
+    cy.get('.component-display').should('have.text', '42')
+  })
 })
