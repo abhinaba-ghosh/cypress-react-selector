@@ -1,10 +1,6 @@
 # cypress-react-selector
 
-ReactJS is one of the most widely use Front-End libraries in the web. Along side React, many developers use styling tools that will minify or re-write the class attribute values attached to the HTML elements via className props in JSX. These modifications and overwrites make it difficult to select the generated HTML using the cypress query commands like find or get since it's not guaranteed that the class name will remain the same.
-
-Worry Not! Here We Introduce **Cypress-React-Selector** :hatching_chick:
-
-_cypress-react-selector_ is lightweight plugin to help you to locate web elements in your REACT app using components, props and states.
+_cypress-react-selector_ is lightweight plugin to help you to locate web elements in your REACT app using components, props and states.. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
 
 Internally, cypress-react-selector uses a library called [resq](https://github.com/baruchvlz/resq) to query React's VirtualDOM in order to retrieve the nodes.
 
