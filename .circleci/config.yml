@@ -1,22 +1,12 @@
-version: 2.1
-
+version: 2
 jobs:
-  build-and-test:
+  build:
     docker:
-      # the Docker image with Cypress dependencies
-      - image: cypress/base:12.16.1
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
+      - image: cypress/base:8
+    working_directory: ~/cypress-react-selector
     steps:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm install
-            - run: npx cypress cache clear
-            - run: npx cypress run --headless
-workflows:
-  build-and-test:
-    jobs:
-      - build-and-test
+            - run: npm ci
+            - run: npm test
