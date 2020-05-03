@@ -1,0 +1,32 @@
+{
+  "name": "cypress-react-selector",
+  "version": "0.1.1",
+  "description": "cypress plugin to locate react elements by component, props and state",
+  "main": "./index.js",
+  "keywords": [
+    "react",
+    "cypress",
+    "cypress-plugin",
+    "cypress-react",
+    "react-locator"
+  ],
+  "scripts": {
+    "test": "cypress open"
+  },
+  "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^4.5.0"
+  },
+  "dependencies": {
+    "resq": "^1.7.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhinaba-ghosh/cypress-react-selector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abhinaba-ghosh/cypress-react-selector.git/issues"
+  },
+  "homepage": "https://github.com/abhinaba-ghosh/cypress-react-selector.git#readme"
+}
