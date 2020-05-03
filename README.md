@@ -28,6 +28,14 @@ import 'cypress-react-selector'
 - Support added for IE, Chrome, Firefox, Safari (IE can break for some complex components)
 - It supports React 16
 
+## Type Definition
+
+```ts
+interface Chainable {
+  react(component: string, props?: {}, state?: {}): Chainable<Element>
+}
+```
+
 ## How to use React Selector?
 
 Lets take this example REACT APP:
@@ -132,12 +140,12 @@ Checkout sample tests [here](./cypress/integration)
 
 ## Tell me your issues
 
-you can raise any issue [here](https://github.com/abhinaba-ghosh/cypress-react-selector.git/issues)
+you can raise any issue [here](https://github.com/abhinaba-ghosh/cypress-react-selector/issues)
 
 ## Contribution
 
 Any pull request is welcome.
 
-If it works for you , give a [Star](https://github.com/abhinaba-ghosh/cypress-react-selector.git)! :star:
+If it works for you , give a [Star](https://github.com/abhinaba-ghosh/cypress-react-selector)! :star:
 
 _- Copyright &copy; 2019- [Abhinaba Ghosh](https://www.linkedin.com/in/abhinaba-ghosh-9a2ab8a0/)_

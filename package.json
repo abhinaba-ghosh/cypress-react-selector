@@ -8,7 +8,7 @@
     "cypress",
     "cypress-plugin",
     "cypress-react",
-    "react-locator"
+    "cypress-io"
   ],
   "scripts": {
     "test": "cypress open"
@@ -26,7 +26,7 @@
     "url": "https://github.com/abhinaba-ghosh/cypress-react-selector.git"
   },
   "bugs": {
-    "url": "https://github.com/abhinaba-ghosh/cypress-react-selector.git/issues"
+    "url": "https://github.com/abhinaba-ghosh/cypress-react-selector/issues"
   },
-  "homepage": "https://github.com/abhinaba-ghosh/cypress-react-selector.git#readme"
+  "homepage": "https://github.com/abhinaba-ghosh/cypress-react-selector#readme"
 }
