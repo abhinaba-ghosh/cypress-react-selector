@@ -1,22 +1,45 @@
 const waitForReact = (timeout = 10000, reactRoot = '#root') => {
-  cy.readFile('node_modules/resq/dist/index.js', 'utf8').then(script => {
+  cy.readFile('node_modules/resq/dist/index.js', 'utf8', {log: false}).then(script => {
     cy.window({ log: false }).then({ timeout: timeout }, win => {
       win.eval(script)
       return new Cypress.Promise.resolve(
         win.resq.waitToLoadReact(timeout, reactRoot)
       )
         .then(() => {
-          cy.log('react loaded')
+          cy.log('[cypress-react-selector] loaded')
         })
         .catch(err => {
-          cy.log(`react root ${reactRoot} is not valid for your application`)
+          cy.log(`[cypress-react-selector] root ${reactRoot} is not valid for your application`)
         })
     })
   })
 }
 
+/**
+ * We can output log messages in bold in Cypress using "**" notation -
+ * but if we search for component by "*" we break it. Thus we need to escape
+ * component names
+ */
+const markupEscape = s => s.replace(/\*/g, '\\*')
+
+/**
+ * Convert props or state into pairs like key="value"
+ */
+const serializeToLog = (props) =>
+  Object.keys(props).map((key) => `${key}=${JSON.stringify(props[key])}`).join(' ')
+
 const react = (component, props, state) => {
-  cy.window().then(window => {
+  let logMessage = `Finding **<${markupEscape(component)}`
+  if (props) {
+    logMessage += ' ' + serializeToLog(props)
+  }
+  if (state) {
+    logMessage += ' ' + serializeToLog(state)
+  }
+
+  logMessage += '>**'
+  cy.log(logMessage)
+  cy.window({log: false}).then(window => {
     if (!window.resq) {
       throw new Error(
         'React Selector not loaded yet. did you forget to run cy.waitToLoadReact()?'

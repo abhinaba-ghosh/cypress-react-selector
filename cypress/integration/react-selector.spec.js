@@ -4,25 +4,25 @@ describe('It should validate cypress react selector', () => {
     cy.waitForReact()
   })
 
-  it('it should validate react selection with component only', () => {
+  it.only('it should validate react selection with component only', () => {
     cy.react('t').should('have.length', '22')
   })
 
-  it('it should validate react selection component and props', () => {
+  it.only('it should validate react selection component and props', () => {
     cy.react('t', { name: '5' }).should('have.text', '5')
   })
 
-  it('it should validate react selection with wildcard', () => {
+  it.only('it should validate react selection with wildcard', () => {
     cy.react('*', { name: '9' }).should('have.text', '9')
   })
 
-  it('it should validate react selection with cypress find command', () => {
+  it.only('it should validate react selection with cypress find command', () => {
     cy.react('t', { name: '5' })
       .find('button')
       .should('have.text', '5')
   })
 
-  it('should calculate 7 * 6', () => {
+  it.only('should calculate 7 * 6', () => {
     cy.react('t', { name: '7' }).click()
     cy.react('t', { name: 'x' }).click()
     cy.react('t', { name: '6' }).click()
