@@ -1,27 +1,7 @@
-version: 2
-jobs:
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1
+workflows:
   build:
-    docker:
-      # the Docker image with Cypress dependencies
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
-    parallelism: 1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - v2-deps-{{ .Branch }}-
-            - v2-deps-
-      - run: npm ci
-      - save_cache:
-          key: v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-      - run:
-          name: Running E2E tests with JUnit reporter
-          command: npm run test
+    jobs:
+      - cypress/run
