@@ -8,4 +8,4 @@ workflows:
     jobs:
       # "cypress" is the name of the imported orb
       # "run" is the name of the job defined in Cypress orb
-      - npm run test
+      - cypress-io/run
