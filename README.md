@@ -19,7 +19,7 @@ npm i --save cypress-react-selector
 Update `Cypress/support/index.js` file to include the cypress-axe commands by adding:
 
 ```js
-import 'cypress-react-selector'
+import "cypress-react-selector";
 ```
 
 ## Alert
@@ -32,7 +32,7 @@ import 'cypress-react-selector'
 
 ```ts
 interface Chainable {
-  react(component: string, props?: {}, state?: {}): Chainable<Element>
+  react(component: string, props?: {}, state?: {}): Chainable<Element>;
 }
 ```
 
@@ -44,17 +44,17 @@ Lets take this example REACT APP:
 // imports
 
 const MyComponent = ({ someBooleanProp }) => (
-  <div>My Component {someBooleanProp ? 'show this' : ''} </div>
-)
+  <div>My Component {someBooleanProp ? "show this" : ""} </div>
+);
 
 const App = () => (
-  <div id='root'>
+  <div id="root">
     <MyComponent />
     <MyComponent someBooleanProp={true} />
   </div>
-)
+);
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 ### Wait for application to be ready to run tests
@@ -63,9 +63,9 @@ To wait until the React's component tree is loaded, add the `waitForReact` metho
 
 ```js
 before(() => {
-  cy.visit('http://localhost:3000/myApp')
-  cy.waitForReact()
-})
+  cy.visit("http://localhost:3000/myApp");
+  cy.waitForReact();
+});
 ```
 
 this will wait to load react inside your app. By-default it will assume that the react root is set to '#root'. In the example above the id of the root element is set to 'root'. So, you don't need to pass the the root selector
@@ -73,7 +73,7 @@ this will wait to load react inside your app. By-default it will assume that the
 The default timeout for `waitForReact` is `10000` ms. You can specify a custom timeout value:
 
 ```js
-cy.waitForReact(30000)
+cy.waitForReact(30000);
 ```
 
 ### Wait to Load React for different react roots
@@ -82,11 +82,11 @@ It is always not true that the root of React app is set to 'root', may be your r
 
 ```js
 const App = () => (
-  <div id='mount'>
+  <div id="mount">
     <MyComponent />
-    <MyComponent someBooleanProp={true} />
+    <MyComponent name={"John"} />
   </div>
-)
+);
 ```
 
 There is some application which displays react components asynchronously. The cypress-react-selector by-default assumes the react root element is set to 'root', if you have different root element, you need to pass that information to the react selector.
@@ -94,7 +94,7 @@ There is some application which displays react components asynchronously. The cy
 ```ts
 // if your react root is set to different selector other than 'root'
 // then you don't need to pass root element information
-cy.waitForReact(10000, '#mount')
+cy.waitForReact(10000, "#mount");
 ```
 
 ### Find Element by React Component
@@ -102,12 +102,12 @@ cy.waitForReact(10000, '#mount')
 You should have [React Develop Tool](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) installed to spy and find out the component name as sometimes components can go though modifications. Once the React gets loaded, you can easily identify an web element by react component name:
 
 ```js
-cy.react('MyComponent')
+cy.react("MyComponent");
 
 // you can have your assertions chained like
-it('it should validate react selection with component name', () => {
-  cy.react('MyComponent').should('have.length', '1')
-})
+it("it should validate react selection with component name", () => {
+  cy.react("MyComponent").should("have.length", "1");
+});
 ```
 
 ### Element filtration by Props and States
@@ -115,7 +115,10 @@ it('it should validate react selection with component name', () => {
 You can filter the REACT components by its props and states like below:
 
 ```ts
-cy.react('MyComponent', { someBooleanProp: true }, { someBooleanState: true })
+cy.react(componentName, { propName: propValue }, { stateName: stateValue });
+
+// for the example APP
+cy.react("MyComponent", { name: "John" });
 ```
 
 ### Wildcard selection
@@ -124,15 +127,64 @@ You can select your components by partial name use a wildcard selectors:
 
 ```ts
 // Partial Match
-cy.react('My*', { someBooleanProp: true })
+cy.react("My*", { name: "John" });
 
 // Entire Match
-cy.react('*', { someBooleanProp: true }) // return all components matched with the prop
+cy.react("*", { name: "John" }); // return all components matched with the prop
+```
+
+### Find element by nested props
+
+Let's suppose you have an Form component
+
+```js
+<Form>
+  <Field name="email" type="email" component={MyTextInput} />
+  <ErrorMessage name="email" component="div" />
+  <br />
+  <Field type="password" name="password" component={MyTextInput} />
+  <ErrorMessage name="password" component="div" />
+  <br />
+  <button type="submit" disabled={isSubmitting}>
+    Submit
+  </button>
+</Form>
+```
+
+And _**MyTextInput**_ component is developed as:
+
+```js
+const MyTextInput = (props) => {
+  const { field, type } = props;
+
+  return (
+    <input {...field} type={type} placeholder={"ENTER YOUR " + field.name} />
+  );
+};
+```
+
+then you can use cypress-react-selector to identify the element with nested props
+
+```js
+it("enter data into the fields", () => {
+  cy.react("MyTextInput", { field: { name: "email" } }).type(
+    "john.doe@cypress.com"
+  );
+  cy.react("MyTextInput", { field: { name: "password" } }).type("whyMe?");
+});
 ```
 
 ## Sample Tests
 
 Checkout sample tests [here](./cypress/integration)
+
+Use [React Dev Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) plugin to easily identify the react component, props and state. Have a look in the below demonstration, how I have used the tool to write the sample test cases.
+
+![react-dev-tools](./cypress-react.gif)
+
+## Sample Example Project
+
+Credit goes to [gregfenton](https://github.com/gregfenton) for presenting a great example that uses Cypress-React-Selector. Checkout the work [here](https://github.com/gregfenton/example-cypress-react-selector-formik)
 
 ## Tool You Need
 
@@ -146,6 +198,7 @@ you can raise any issue [here](https://github.com/abhinaba-ghosh/cypress-react-s
 
 Any pull request is welcome.
 
+If this plugin helps you in your automation journey, choose to [Sponsor](https://www.patreon.com/user?u=32109749&fan_landing=true)
 If it works for you , give a [Star](https://github.com/abhinaba-ghosh/cypress-react-selector)! :star:
 
 _- Copyright &copy; 2019- [Abhinaba Ghosh](https://www.linkedin.com/in/abhinaba-ghosh-9a2ab8a0/)_
