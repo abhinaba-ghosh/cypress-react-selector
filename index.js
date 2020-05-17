@@ -153,9 +153,15 @@ const getProps = (subject, propName) => {
     );
   }
   cy.log(`Finding value for prop **${propName || 'all props'}**`);
-  cy.log(`Prop found **${JSON.safeStringify(subject[0].props)}**`);
+  cy.log(
+    `Prop value found **${
+      propName
+        ? JSON.safeStringify(getJsonValue(subject[0].props, propName))
+        : JSON.safeStringify(subject[0].props)
+    }**`
+  );
   const propValue = propName
-    ? cy.wrap(subject[0].props[propName])
+    ? cy.wrap(getJsonValue(subject[0].props, propName))
     : cy.wrap(subject[0].props);
   return propValue;
 };
@@ -200,9 +206,29 @@ JSON.safeStringify = (obj, indent = 2) => {
   return retVal;
 };
 
+/**
+ * get json value by string keys
+ * @param {*} object
+ * @param {*} keys
+ */
+const getJsonValue = (o, s) => {
+  s = s.replace(/\[(\w+)\]/g, '.$1');
+  s = s.replace(/^\./, '');
+  var a = s.split('.');
+  for (var i = 0, n = a.length; i < n; ++i) {
+    var k = a[i];
+    if (k in o) {
+      o = o[k];
+    } else {
+      return;
+    }
+  }
+  return o;
+};
+
 // add cypress custom commands
 Cypress.Commands.add('waitForReact', waitForReact);
 Cypress.Commands.add('react', react);
 Cypress.Commands.add('getReact', getReact);
 Cypress.Commands.add('getProps', { prevSubject: true }, getProps);
-Cypress.Commands.add('getCurrentState', { prevSubject: true }, getProps);
+Cypress.Commands.add('getCurrentState', { prevSubject: true }, getCurrentState);
