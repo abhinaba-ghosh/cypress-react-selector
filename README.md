@@ -2,9 +2,32 @@
 
 [![Build Status](https://circleci.com/gh/abhinaba-ghosh/cypress-react-selector.svg?style=shield&branch-=master)](https://app.circleci.com/pipelines/github/abhinaba-ghosh/cypress-react-selector)
 
-_cypress-react-selector_ is lightweight plugin to help you to locate web elements in your REACT app using components, props and states.. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
+_cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states.. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
 
 Internally, cypress-react-selector uses a library called [resq](https://github.com/baruchvlz/resq) to query React's VirtualDOM in order to retrieve the nodes.
+
+## Table of Contents
+
+- [Install and configure](#install-and-configure)
+  - [Add as a dependency:](#add-as-a-dependency-)
+  - [Include the commands](#include-the-commands)
+- [Alert](#alert)
+- [Type Definition](#type-definition)
+- [How to use React Selector?](#how-to-use-react-selector-)
+  - [Wait for application to be ready to run tests](#wait-for-application-to-be-ready-to-run-tests)
+  - [Wait to Load React for different react roots](#wait-to-load-react-for-different-react-roots)
+  - [Find Element by React Component](#find-element-by-react-component)
+  - [Element filtration by Props and States](#element-filtration-by-props-and-states)
+  - [Wildcard selection](#wildcard-selection)
+  - [Find element by nested props](#find-element-by-nested-props)
+- [Get React Properties from element](#get-react-properties-from-element)
+  - [Get Props](#get-props)
+  - [Get current state](#get-current-state)
+- [Sample Tests](#sample-tests)
+- [Sample Example Project](#sample-example-project)
+- [Tool You Need](#tool-you-need)
+- [Tell me your issues](#tell-me-your-issues)
+- [Contribution](#contribution)
 
 ## Install and configure
 
@@ -19,14 +42,13 @@ npm i --save cypress-react-selector
 Update `Cypress/support/index.js` file to include the cypress-axe commands by adding:
 
 ```js
-import "cypress-react-selector";
+import 'cypress-react-selector';
 ```
 
 ## Alert
 
 - cypress-react-selector supports NodeJS 8 or higher
-- Support added for IE, Chrome, Firefox, Safari (IE can break for some complex components)
-- It supports React 16
+- It supports React 16 or higher
 
 ## Type Definition
 
@@ -44,7 +66,7 @@ Lets take this example REACT APP:
 // imports
 
 const MyComponent = ({ someBooleanProp }) => (
-  <div>My Component {someBooleanProp ? "show this" : ""} </div>
+  <div>My Component {someBooleanProp ? 'show this' : ''} </div>
 );
 
 const App = () => (
@@ -54,7 +76,7 @@ const App = () => (
   </div>
 );
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 ### Wait for application to be ready to run tests
@@ -63,7 +85,7 @@ To wait until the React's component tree is loaded, add the `waitForReact` metho
 
 ```js
 before(() => {
-  cy.visit("http://localhost:3000/myApp");
+  cy.visit('http://localhost:3000/myApp');
   cy.waitForReact();
 });
 ```
@@ -84,7 +106,7 @@ It is always not true that the root of React app is set to 'root', may be your r
 const App = () => (
   <div id="mount">
     <MyComponent />
-    <MyComponent name={"John"} />
+    <MyComponent name={'John'} />
   </div>
 );
 ```
@@ -94,7 +116,7 @@ There is some application which displays react components asynchronously. The cy
 ```ts
 // if your react root is set to different selector other than 'root'
 // then you don't need to pass root element information
-cy.waitForReact(10000, "#mount");
+cy.waitForReact(10000, '#mount');
 ```
 
 ### Find Element by React Component
@@ -102,11 +124,11 @@ cy.waitForReact(10000, "#mount");
 You should have [React Develop Tool](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) installed to spy and find out the component name as sometimes components can go though modifications. Once the React gets loaded, you can easily identify an web element by react component name:
 
 ```js
-cy.react("MyComponent");
+cy.react('MyComponent');
 
 // you can have your assertions chained like
-it("it should validate react selection with component name", () => {
-  cy.react("MyComponent").should("have.length", "1");
+it('it should validate react selection with component name', () => {
+  cy.react('MyComponent').should('have.length', '1');
 });
 ```
 
@@ -118,7 +140,7 @@ You can filter the REACT components by its props and states like below:
 cy.react(componentName, { propName: propValue }, { stateName: stateValue });
 
 // for the example APP
-cy.react("MyComponent", { name: "John" });
+cy.react('MyComponent', { name: 'John' });
 ```
 
 ### Wildcard selection
@@ -127,10 +149,10 @@ You can select your components by partial name use a wildcard selectors:
 
 ```ts
 // Partial Match
-cy.react("My*", { name: "John" });
+cy.react('My*', { name: 'John' });
 
 // Entire Match
-cy.react("*", { name: "John" }); // return all components matched with the prop
+cy.react('*', { name: 'John' }); // return all components matched with the prop
 ```
 
 ### Find element by nested props
@@ -158,7 +180,7 @@ const MyTextInput = (props) => {
   const { field, type } = props;
 
   return (
-    <input {...field} type={type} placeholder={"ENTER YOUR " + field.name} />
+    <input {...field} type={type} placeholder={'ENTER YOUR ' + field.name} />
   );
 };
 ```
@@ -166,12 +188,43 @@ const MyTextInput = (props) => {
 then you can use cypress-react-selector to identify the element with nested props
 
 ```js
-it("enter data into the fields", () => {
-  cy.react("MyTextInput", { field: { name: "email" } }).type(
-    "john.doe@cypress.com"
+it('enter data into the fields', () => {
+  cy.react('MyTextInput', { field: { name: 'email' } }).type(
+    'john.doe@cypress.com'
   );
-  cy.react("MyTextInput", { field: { name: "password" } }).type("whyMe?");
+  cy.react('MyTextInput', { field: { name: 'password' } }).type('whyMe?');
 });
+```
+
+## Get React Properties from element
+
+Let's take same [Form example](#find-element-by-nested-props)
+
+### Get Props
+
+You can get the React properties from a React element and validate the properties run time.
+
+```js
+// set the email in the form
+cy.react('MyTextInput', { field: { name: 'email' } }).type(
+  'john.doe@cypress.com'
+);
+
+// validate the property runtime
+cy.getReact('MyTextInput', { field: { name: 'email' } })
+  .getProps('fields.value')
+  .should('eq', 'john.doe@cypress.com');
+
+// to get all the props, simply do not pass anything in getProps() method
+cy.getReact('MyTextInput', { field: { name: 'email' } }).getProps();
+```
+
+![get-props](./screenshots/get-props.png)
+
+### Get current state
+
+```js
+cy.getReact('MyTextInput', { field: { name: 'email' } }).getCurrentState(); // can return string | boolean | any[] | {}
 ```
 
 ## Sample Tests
@@ -180,7 +233,7 @@ Checkout sample tests [here](./cypress/integration)
 
 Use [React Dev Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) plugin to easily identify the react component, props and state. Have a look in the below demonstration, how I have used the tool to write the sample test cases.
 
-![react-dev-tools](./cypress-react.gif)
+![react-dev-tools](./screenshots/cy-react-dev-tool.gif)
 
 ## Sample Example Project
 
@@ -199,6 +252,7 @@ you can raise any issue [here](https://github.com/abhinaba-ghosh/cypress-react-s
 Any pull request is welcome.
 
 If this plugin helps you in your automation journey, choose to [Sponsor](https://www.patreon.com/user?u=32109749&fan_landing=true)
+
 If it works for you , give a [Star](https://github.com/abhinaba-ghosh/cypress-react-selector)! :star:
 
-_- Copyright &copy; 2019- [Abhinaba Ghosh](https://www.linkedin.com/in/abhinaba-ghosh-9a2ab8a0/)_
+_- Copyright &copy; 2020- [Abhinaba Ghosh](https://www.linkedin.com/in/abhinaba-ghosh-9a2ab8a0/)_
