@@ -183,8 +183,14 @@ const getCurrentState = (subject) => {
     );
   }
   cy.log(`Finding current state of the React component`);
-  cy.log(`Current state found **${subject[0].state}**`);
-  return subject[0].state;
+  cy.log(
+    `Current state found **${
+      getType(subject[0].state) === 'object'
+        ? JSON.safeStringify(subject[0].state)
+        : subject[0].state
+    }**`
+  );
+  return cy.wrap(subject[0].state);
 };
 
 /**
@@ -224,6 +230,17 @@ const getJsonValue = (o, s) => {
     }
   }
   return o;
+};
+
+/**
+ * get the type of the object
+ * @param {*} p
+ */
+const getType = (p) => {
+  if (Array.isArray(p)) return 'array';
+  else if (typeof p == 'string') return 'string';
+  else if (p != null && typeof p == 'object') return 'object';
+  else return 'other';
 };
 
 // add cypress custom commands
