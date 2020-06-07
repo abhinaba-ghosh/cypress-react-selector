@@ -45,6 +45,17 @@ Update `Cypress/support/index.js` file to include the cypress-axe commands by ad
 import 'cypress-react-selector';
 ```
 
+### TSConfig Settings for types
+
+```js
+{
+  "compilerOptions": {
+    "sourceType": "module",
+    "types": ["node", "cypress", "cypress-react-selector"]
+  }
+}
+```
+
 ## Alert
 
 - cypress-react-selector supports NodeJS 8 or higher
