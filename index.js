@@ -142,10 +142,8 @@ const getReact = (component, props, state) => {
  * @param {*} propName
  */
 const getProps = (subject, propName) => {
-  if (!subject) {
-    throw new Error(
-      'getProps() is a child command and requires React Node as subject. Use with cy.getReact()'
-    );
+  if (!subject || !subject[0].props) {
+    throw new Error('getProps() is a child command. Use with cy.getReact()');
   }
   if (subject.length > 1) {
     throw new Error(
@@ -172,9 +170,9 @@ const getProps = (subject, propName) => {
  * @param {*} propName
  */
 const getCurrentState = (subject) => {
-  if (!subject) {
+  if (!subject || !subject[0].state) {
     throw new Error(
-      'getCurrentState() is a child command and requires React Node as subject. Use with cy.getReact()'
+      'getCurrentState() is a child command. Use with cy.getReact()'
     );
   }
   if (subject.length > 1) {
