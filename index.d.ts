@@ -11,6 +11,19 @@ declare namespace Cypress {
   }
   interface Chainable {
     /**
+     *wait until the React's component tree is loaded, add the `waitForReact` method to fixture's `before` hook.
+     * @example
+     *before(() => {
+     * cy.visit('http://localhost:3000/myApp');
+     *cy.waitForReact();
+     *});
+     *
+     * @param timeout
+     * @param reactRoot
+     */
+    waitForReact(timeout: number, reactRoot: string): Chainable<any>;
+
+    /**
      * Get react elements by component, props and states
      * @see https://github.com/abhinaba-ghosh/cypress-react-selector/blob/master/cypress/integration/react-selector.spec.js
      * @example
