@@ -1,8 +1,10 @@
 # cypress-react-selector
 
 [![Build Status](https://circleci.com/gh/abhinaba-ghosh/cypress-react-selector.svg?style=shield&branch-=master)](https://app.circleci.com/pipelines/github/abhinaba-ghosh/cypress-react-selector)
+[![NPM release](https://img.shields.io/npm/v/cypress-react-selector.svg 'NPM release')](https://www.npmjs.com/package/cypress-react-selector)
+[![PayPal donation](https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ppl.png 'PayPal donation')](https://paypal.me/abhinabaghosh)
 
-_cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states.. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
+_cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
 
 Internally, cypress-react-selector uses a library called [resq](https://github.com/baruchvlz/resq) to query React's VirtualDOM in order to retrieve the nodes.
 
@@ -101,7 +103,7 @@ before(() => {
 });
 ```
 
-this will wait to load react inside your app. By-default it will assume that the react root is set to '#root'. In the example above the id of the root element is set to 'root'. So, you don't need to pass the the root selector
+this will wait to load react inside your app. `waitForReact` automatically find out the react root of your application.
 
 The default timeout for `waitForReact` is `10000` ms. You can specify a custom timeout value:
 
@@ -111,7 +113,7 @@ cy.waitForReact(30000);
 
 ### Wait to Load React for different react roots
 
-It is always not true that the root of React app is set to 'root', may be your root element is 'mount', like:
+It may even possible that you have different REACT roots (different REACT instances in same application). In this case, you can specify the `CSS Selector` of the target `root`.
 
 ```js
 const App = () => (
@@ -122,7 +124,7 @@ const App = () => (
 );
 ```
 
-There is some application which displays react components asynchronously. The cypress-react-selector by-default assumes the react root element is set to 'root', if you have different root element, you need to pass that information to the react selector.
+There is some application which displays react components asynchronously. You need to pass `root selector` information to the react selector.
 
 ```ts
 // if your react root is set to different selector other than 'root'

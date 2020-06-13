@@ -3,7 +3,7 @@
  * @param {*} timeout
  * @param {*} reactRoot
  */
-const waitForReact = (timeout = 10000, reactRoot = '#root') => {
+const waitForReact = (timeout = 10000, reactRoot) => {
   cy.readFile('node_modules/resq/dist/index.js', 'utf8', { log: false }).then(
     (script) => {
       cy.window({ log: false }).then({ timeout: timeout }, (win) => {
