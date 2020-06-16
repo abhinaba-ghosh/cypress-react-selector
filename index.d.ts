@@ -11,17 +11,17 @@ declare namespace Cypress {
   }
   interface Chainable {
     /**
-     *wait until the React's component tree is loaded, add the `waitForReact` method to fixture's `before` hook.
+     * Wait until the React's component tree is loaded. Call `cy.waitForReact()` in your test's `before` hook.
      * @example
-     *before(() => {
-     * cy.visit('http://localhost:3000/myApp');
-     *cy.waitForReact();
-     *});
+     * before(() => {
+     *  cy.visit('http://localhost:3000/myApp');
+     *  cy.waitForReact();
+     * });
      *
      * @param timeout
      * @param reactRoot
      */
-    waitForReact(timeout: number, reactRoot: string): Chainable<any>;
+    waitForReact(timeout?: number, reactRoot?: string): Chainable<any>;
 
     /**
      * Get react elements by component, props and states
