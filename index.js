@@ -45,8 +45,9 @@ const serializeToLog = (props) =>
  * @param {*} props
  * @param {*} state
  */
-const react = (component, props, state) => {
+const react = (subject, component, props, state) => {
   let logMessage = `Finding **<${markupEscape(component)}`;
+  let elements;
   if (props) {
     logMessage += ' ' + serializeToLog(props);
   }
@@ -56,13 +57,20 @@ const react = (component, props, state) => {
 
   logMessage += '>**';
   cy.log(logMessage);
+
   cy.window({ log: false }).then((window) => {
     if (!window.resq) {
       throw new Error(
         '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
       );
     }
-    let elements = window.resq.resq$$(component);
+
+    if (subject) {
+      elements = window.resq.resq$$(component, subject[0]);
+    } else {
+      elements = window.resq.resq$$(component);
+    }
+
     if (props) {
       elements = elements.byProps(props);
     }
@@ -104,7 +112,7 @@ const react = (component, props, state) => {
  *   children: RESQNode[]
  * }
  */
-const getReact = (component, props, state) => {
+const getReact = (subject, component, props, state) => {
   let logMessage = `Finding **<${markupEscape(component)}`;
   if (props) {
     logMessage += ' ' + serializeToLog(props);
@@ -115,13 +123,19 @@ const getReact = (component, props, state) => {
 
   logMessage += '>**';
   cy.log(logMessage);
+
+  let elements;
   cy.window({ log: false }).then((window) => {
     if (!window.resq) {
       throw new Error(
         '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
       );
     }
-    let elements = window.resq.resq$$(component);
+    if (subject) {
+      elements = window.resq.resq$$(component, subject[0].node);
+    } else {
+      elements = window.resq.resq$$(component);
+    }
     if (props) {
       elements = elements.byProps(props);
     }
@@ -243,7 +257,7 @@ const getType = (p) => {
 
 // add cypress custom commands
 Cypress.Commands.add('waitForReact', waitForReact);
-Cypress.Commands.add('react', react);
-Cypress.Commands.add('getReact', getReact);
+Cypress.Commands.add('react', { prevSubject: ['optional', 'element'] }, react);
+Cypress.Commands.add('getReact', { prevSubject: 'optional' }, getReact);
 Cypress.Commands.add('getProps', { prevSubject: true }, getProps);
 Cypress.Commands.add('getCurrentState', { prevSubject: true }, getCurrentState);

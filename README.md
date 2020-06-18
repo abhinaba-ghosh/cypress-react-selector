@@ -25,6 +25,7 @@ Internally, cypress-react-selector uses a library called [resq](https://github.c
 - [Get React Properties from element](#get-react-properties-from-element)
   - [Get Props](#get-props)
   - [Get current state](#get-current-state)
+- [Use fluent chained queries](#use-fluent-chained-queries)
 - [Sample Tests](#sample-tests)
 - [Sample Example Project](#sample-example-project)
 - [Tool You Need](#tool-you-need)
@@ -238,6 +239,27 @@ cy.getReact('MyTextInput', { field: { name: 'email' } }).getProps();
 
 ```js
 cy.getReact('MyTextInput', { field: { name: 'email' } }).getCurrentState(); // can return string | boolean | any[] | {}
+```
+
+## Use fluent chained queries
+
+You can chain `rest-selector` queries like:
+
+- fetch `HTMLElements` by chained `react` queries
+
+```js
+cy.react('MyComponent', { name: 'Bob' })
+  .react('MyAge')
+  .should('have.text', '50');
+```
+
+- fetch `react props and states` by chained `getReact` query
+
+```js
+cy.getReact('MyComponent', { name: 'Bob' })
+  .getReact('MyAge')
+  .getProps('age')
+  .should('eq', '50');
 ```
 
 ## Sample Tests

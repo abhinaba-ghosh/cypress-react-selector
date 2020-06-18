@@ -40,4 +40,15 @@ describe('It should validate cypress react selector', () => {
         expect(JSON.stringify(props)).to.contain('5');
       });
   });
+
+  it('it should validate react chaining', () => {
+    cy.react('t', { name: '5' }).react('button').should('have.text', '5');
+  });
+
+  it('it should validate chained react instances getProps with specific prop name', () => {
+    cy.getReact('t')
+      .getReact('t', { name: '5' })
+      .getProps('name')
+      .should('eq', '5');
+  });
 });
