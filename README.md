@@ -2,7 +2,6 @@
 
 [![Build Status](https://circleci.com/gh/abhinaba-ghosh/cypress-react-selector.svg?style=shield&branch-=master)](https://app.circleci.com/pipelines/github/abhinaba-ghosh/cypress-react-selector)
 [![NPM release](https://img.shields.io/npm/v/cypress-react-selector.svg 'NPM release')](https://www.npmjs.com/package/cypress-react-selector)
-[![PayPal donation](https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ppl.png 'PayPal donation')](https://paypal.me/abhinabaghosh)
 
 _cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
 
@@ -42,7 +41,7 @@ npm i --save cypress-react-selector
 
 ### Include the commands
 
-Update `Cypress/support/index.js` file to include the cypress-axe commands by adding:
+Update `Cypress/support/index.js` file to include the cypress-react-selector commands by adding:
 
 ```js
 import 'cypress-react-selector';
@@ -243,7 +242,7 @@ cy.getReact('MyTextInput', { field: { name: 'email' } }).getCurrentState(); // c
 
 ## Use fluent chained queries
 
-You can chain `rest-selector` queries like:
+You can chain `react-selector` queries like:
 
 - fetch `HTMLElements` by chained `react` queries
 
