@@ -46,6 +46,7 @@ const serializeToLog = (props) =>
  * @param {*} state
  */
 const react = (subject, component, props, state) => {
+  cy.log('subject: ' + subject + ', component: ' + component + ', props: ' + JSON.stringify(props) + ', state: ' + state);
   const startTime = Date.now();
   let logMessage = `Finding **<${markupEscape(component)}`;
   let elements;
@@ -83,10 +84,10 @@ const react = (subject, component, props, state) => {
         }
         if (!elements.length) {
           if ((Date.now() - startTime) >= Cypress.config('defaultCommandTimeout')) {
-            resolve ([]);
+            reject(new Error(`React Cypress query timed out after ${Cypress.config('defaultCommandTimeout')}ms.`))
             return;
           }
-          setTimeout(tryFind, 100);
+          setTimeout(tryFind, 250);
           return;
         }
         let nodes = [];
