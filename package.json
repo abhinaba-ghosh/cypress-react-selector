@@ -19,7 +19,7 @@
     "cypress": "^4.5.0"
   },
   "dependencies": {
-    "resq": "^1.7.1"
+    "resq": "Wine-Dark-Sea/resq#f2e30b9"
   },
   "repository": {
     "type": "git",
