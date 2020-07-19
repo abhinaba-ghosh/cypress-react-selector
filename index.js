@@ -46,6 +46,7 @@ const serializeToLog = (props) =>
  * @param {*} state
  */
 const react = (subject, component, props, state) => {
+  const startTime = Date.now();
   let logMessage = `Finding **<${markupEscape(component)}`;
   let elements;
   if (props) {
@@ -59,38 +60,49 @@ const react = (subject, component, props, state) => {
   cy.log(logMessage);
 
   cy.window({ log: false }).then((window) => {
-    if (!window.resq) {
-      throw new Error(
-        '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
-      );
-    }
+    return new Promise(((resolve, reject) => {
+      const tryFind = () => {
+        if (!window.resq) {
+          reject(new Error(
+            '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
+          ));
+          return;
+        }
 
-    if (subject) {
-      elements = window.resq.resq$$(component, subject[0]);
-    } else {
-      elements = window.resq.resq$$(component);
-    }
+        if (subject) {
+          elements = window.resq.resq$$(component, subject[0]);
+        } else {
+          elements = window.resq.resq$$(component);
+        }
 
-    if (props) {
-      elements = elements.byProps(props);
-    }
-    if (state) {
-      elements = elements.byState(state);
-    }
-    if (!elements.length) {
-      return [];
-    }
-    let nodes = [];
-    elements.forEach((elm) => {
-      var node = elm.node,
-        isFragment = elm.isFragment;
-      if (isFragment) {
-        nodes = nodes.concat(node);
-      } else {
-        nodes.push(node);
-      }
-    });
-    return nodes;
+        if (props) {
+          elements = elements.byProps(props);
+        }
+        if (state) {
+          elements = elements.byState(state);
+        }
+        if (!elements.length) {
+          if ((Date.now() - startTime) >= Cypress.config('defaultCommandTimeout')) {
+            resolve ([]);
+            return;
+          }
+          setTimeout(tryFind, 100);
+          return;
+        }
+        let nodes = [];
+        elements.forEach((elm) => {
+          var node = elm.node,
+            isFragment = elm.isFragment;
+          if (isFragment) {
+            nodes = nodes.concat(node);
+          } else {
+            nodes.push(node);
+          }
+        });
+        resolve(nodes);
+      };
+      tryFind();
+    }));
   });
 };
 
