@@ -166,17 +166,3 @@ export const getCurrentState = (subject) => {
   );
   return cy.wrap(subject[0].state);
 };
-
-/**
- * get all props or specific props from react node
- * @param {*} subject
- * @param {*} propName
- */
-export const setProps = (subject, propName) => {
-  cy.log(`subject: ${subject[0].props.brand}`);
-  subject[0].props.brand = 'pop';
-  cy.log(`subject: ${subject[0].props.brand}`);
-  if (!subject || !subject[0].props) {
-    throw new Error('getProps() is a child command. Use with cy.getReact()');
-  }
-};
