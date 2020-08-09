@@ -232,7 +232,7 @@ cy.getReact('MyTextInput', { field: { name: 'email' } })
 cy.getReact('MyTextInput', { field: { name: 'email' } }).getProps();
 ```
 
-![get-props](./screenshots/get-props.png)
+![get-props](./docs/get-props.png)
 
 ### Get current state
 
@@ -267,7 +267,7 @@ Checkout sample tests [here](./cypress/integration)
 
 Use [React Dev Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) plugin to easily identify the react component, props and state. Have a look in the below demonstration, how I have used the tool to write the sample test cases.
 
-![react-dev-tools](./screenshots/cy-react-dev-tool.gif)
+![react-dev-tools](./docs/cy-react-dev-tool.gif)
 
 ## Sample Example Project
 
