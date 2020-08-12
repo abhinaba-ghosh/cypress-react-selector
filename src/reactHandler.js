@@ -1,4 +1,4 @@
-import { markupEscape, serializeToLog } from './logger';
+import { getIdentifierLogs } from './logger';
 import { safeStringify, getJsonValue, getType } from './utils';
 
 /**
@@ -8,18 +8,9 @@ import { safeStringify, getJsonValue, getType } from './utils';
  * @param {*} state
  */
 export const react = (subject, component, props, state) => {
-  let logMessage = `Finding **<${markupEscape(component)}`;
+  cy.log(`Finding ${getIdentifierLogs(component, props, state)}`);
+
   let elements;
-  if (props) {
-    logMessage += ' ' + serializeToLog(props);
-  }
-  if (state) {
-    logMessage += ' ' + serializeToLog(state);
-  }
-
-  logMessage += '>**';
-  cy.log(logMessage);
-
   cy.window({ log: false }).then((window) => {
     if (!window.resq) {
       throw new Error(
@@ -75,16 +66,7 @@ export const react = (subject, component, props, state) => {
  * }
  */
 export const getReact = (subject, component, props, state) => {
-  let logMessage = `Finding **<${markupEscape(component)}`;
-  if (props) {
-    logMessage += ' ' + serializeToLog(props);
-  }
-  if (state) {
-    logMessage += ' ' + serializeToLog(state);
-  }
-
-  logMessage += '>**';
-  cy.log(logMessage);
+  cy.log(`Finding ${getIdentifierLogs(component, props, state)}`);
 
   let elements;
   cy.window({ log: false }).then((window) => {
@@ -105,9 +87,10 @@ export const getReact = (subject, component, props, state) => {
       elements = elements.byState(state);
     }
     if (!elements.length) {
-      return [];
+      throw new Error(
+        `Component not found ${getIdentifierLogs(component, props, state)}`
+      );
     }
-
     return elements;
   });
 };

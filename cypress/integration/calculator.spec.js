@@ -51,4 +51,8 @@ describe('It should validate cypress react selector', () => {
       .getProps('name')
       .should('eq', '5');
   });
+
+  // it.only('it should throw error if node is undefined', () => {
+  //   cy.getReact('App', { name: '5' }).getReact('t').should('be.exist');
+  // });
 });
