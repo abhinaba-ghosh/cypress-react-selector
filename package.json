@@ -11,15 +11,17 @@
     "cypress-io"
   ],
   "scripts": {
-    "test": "cypress run --headless"
+    "test": "cypress run --headless",
+    "format": "prettier --check src/**/*.js"
   },
   "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^4.5.0"
+    "cypress": "^4.5.0",
+    "prettier": "^2.0.5"
   },
   "dependencies": {
-    "resq": "^1.7.1"
+    "resq": "1.8.0"
   },
   "repository": {
     "type": "git",

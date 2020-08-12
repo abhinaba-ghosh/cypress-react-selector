@@ -1,7 +1,7 @@
 # cypress-react-selector
 
 [![Build Status](https://circleci.com/gh/abhinaba-ghosh/cypress-react-selector.svg?style=shield&branch-=master)](https://app.circleci.com/pipelines/github/abhinaba-ghosh/cypress-react-selector)
-[![NPM release](https://img.shields.io/npm/v/cypress-react-selector.svg "NPM release")](https://www.npmjs.com/package/cypress-react-selector)
+[![NPM release](https://img.shields.io/npm/v/cypress-react-selector.svg 'NPM release')](https://www.npmjs.com/package/cypress-react-selector)
 
 _cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
 
@@ -44,7 +44,7 @@ npm i --save cypress-react-selector
 Update `Cypress/support/index.js` file to include the cypress-react-selector commands by adding:
 
 ```js
-import "cypress-react-selector";
+import 'cypress-react-selector';
 ```
 
 ### TSConfig Settings for types
@@ -79,7 +79,7 @@ Lets take this example REACT APP:
 // imports
 
 const MyComponent = ({ someBooleanProp }) => (
-  <div>My Component {someBooleanProp ? "show this" : ""} </div>
+  <div>My Component {someBooleanProp ? 'show this' : ''} </div>
 );
 
 const App = () => (
@@ -89,7 +89,7 @@ const App = () => (
   </div>
 );
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 ### Wait for application to be ready to run tests
@@ -98,7 +98,7 @@ To wait until the React's component tree is loaded, add the `waitForReact` metho
 
 ```js
 before(() => {
-  cy.visit("http://localhost:3000/myApp");
+  cy.visit('http://localhost:3000/myApp');
   cy.waitForReact();
 });
 ```
@@ -119,7 +119,7 @@ It may even possible that you have different REACT roots (different REACT instan
 const App = () => (
   <div id="mount">
     <MyComponent />
-    <MyComponent name={"John"} />
+    <MyComponent name={'John'} />
   </div>
 );
 ```
@@ -129,7 +129,7 @@ There is some application which displays react components asynchronously. You ne
 ```ts
 // if your react root is set to different selector other than 'root'
 // then you don't need to pass root element information
-cy.waitForReact(10000, "#mount");
+cy.waitForReact(10000, '#mount');
 ```
 
 ### Find Element by React Component
@@ -137,11 +137,11 @@ cy.waitForReact(10000, "#mount");
 You should have [React Develop Tool](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) installed to spy and find out the component name as sometimes components can go though modifications. Once the React gets loaded, you can easily identify an web element by react component name:
 
 ```js
-cy.react("MyComponent");
+cy.react('MyComponent');
 
 // you can have your assertions chained like
-it("it should validate react selection with component name", () => {
-  cy.react("MyComponent").should("have.length", "1");
+it('it should validate react selection with component name', () => {
+  cy.react('MyComponent').should('have.length', '1');
 });
 ```
 
@@ -153,7 +153,7 @@ You can filter the REACT components by its props and states like below:
 cy.react(componentName, { propName: propValue }, { stateName: stateValue });
 
 // for the example APP
-cy.react("MyComponent", { name: "John" });
+cy.react('MyComponent', { name: 'John' });
 ```
 
 ### Wildcard selection
@@ -162,10 +162,10 @@ You can select your components by partial name use a wildcard selectors:
 
 ```ts
 // Partial Match
-cy.react("My*", { name: "John" });
+cy.react('My*', { name: 'John' });
 
 // Entire Match
-cy.react("*", { name: "John" }); // return all components matched with the prop
+cy.react('*', { name: 'John' }); // return all components matched with the prop
 ```
 
 ### Find element by nested props
@@ -193,7 +193,7 @@ const MyTextInput = (props) => {
   const { field, type } = props;
 
   return (
-    <input {...field} type={type} placeholder={"ENTER YOUR " + field.name} />
+    <input {...field} type={type} placeholder={'ENTER YOUR ' + field.name} />
   );
 };
 ```
@@ -201,11 +201,11 @@ const MyTextInput = (props) => {
 then you can use cypress-react-selector to identify the element with nested props
 
 ```js
-it("enter data into the fields", () => {
-  cy.react("MyTextInput", { field: { name: "email" } }).type(
-    "john.doe@cypress.com"
+it('enter data into the fields', () => {
+  cy.react('MyTextInput', { field: { name: 'email' } }).type(
+    'john.doe@cypress.com'
   );
-  cy.react("MyTextInput", { field: { name: "password" } }).type("whyMe?");
+  cy.react('MyTextInput', { field: { name: 'password' } }).type('whyMe?');
 });
 ```
 
@@ -219,17 +219,17 @@ You can get the React properties from a React element and validate the propertie
 
 ```js
 // set the email in the form
-cy.react("MyTextInput", { field: { name: "email" } }).type(
-  "john.doe@cypress.com"
+cy.react('MyTextInput', { field: { name: 'email' } }).type(
+  'john.doe@cypress.com'
 );
 
 // validate the property runtime
-cy.getReact("MyTextInput", { field: { name: "email" } })
-  .getProps("fields.value")
-  .should("eq", "john.doe@cypress.com");
+cy.getReact('MyTextInput', { field: { name: 'email' } })
+  .getProps('fields.value')
+  .should('eq', 'john.doe@cypress.com');
 
 // to get all the props, simply do not pass anything in getProps() method
-cy.getReact("MyTextInput", { field: { name: "email" } }).getProps();
+cy.getReact('MyTextInput', { field: { name: 'email' } }).getProps();
 ```
 
 ![get-props](./docs/get-props.png)
@@ -237,7 +237,7 @@ cy.getReact("MyTextInput", { field: { name: "email" } }).getProps();
 ### Get current state
 
 ```js
-cy.getReact("MyTextInput", { field: { name: "email" } }).getCurrentState(); // can return string | boolean | any[] | {}
+cy.getReact('MyTextInput', { field: { name: 'email' } }).getCurrentState(); // can return string | boolean | any[] | {}
 ```
 
 ## Use fluent chained queries
@@ -247,18 +247,18 @@ You can chain `react-selector` queries like:
 - fetch `HTMLElements` by chained `react` queries
 
 ```js
-cy.react("MyComponent", { name: "Bob" })
-  .react("MyAge")
-  .should("have.text", "50");
+cy.react('MyComponent', { name: 'Bob' })
+  .react('MyAge')
+  .should('have.text', '50');
 ```
 
 - fetch `react props and states` by chained `getReact` query
 
 ```js
-cy.getReact("MyComponent", { name: "Bob" })
-  .getReact("MyAge")
-  .getProps("age")
-  .should("eq", "50");
+cy.getReact('MyComponent', { name: 'Bob' })
+  .getReact('MyAge')
+  .getProps('age')
+  .should('eq', '50');
 ```
 
 ## Sample Tests
