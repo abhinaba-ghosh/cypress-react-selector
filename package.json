@@ -11,15 +11,20 @@
     "cypress-io"
   ],
   "scripts": {
-    "test": "cypress run --headless"
+    "test": "cypress run --headless",
+    "format": "npx prettier --write .",
+    "prerelease": "npm run build",
+    "release:patch": "npm cache clean --force && npm version patch && npm publish --force",
+    "release:minor": "npm cache clean --force && npm version minor && npm publish --force"
   },
   "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^4.5.0"
+    "cypress": "^4.5.0",
+    "prettier": "^2.0.5"
   },
   "dependencies": {
-    "resq": "^1.7.1"
+    "resq": "1.8.0"
   },
   "repository": {
     "type": "git",
