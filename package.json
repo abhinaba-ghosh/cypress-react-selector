@@ -12,7 +12,10 @@
   ],
   "scripts": {
     "test": "cypress run --headless",
-    "format": "prettier --check src/**/*.js"
+    "format": "npx prettier --write .",
+    "prerelease": "npm run build",
+    "release:patch": "npm cache clean --force && npm version patch && npm publish --force",
+    "release:minor": "npm cache clean --force && npm version minor && npm publish --force"
   },
   "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
   "license": "MIT",
