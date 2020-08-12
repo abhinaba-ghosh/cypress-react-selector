@@ -30,7 +30,12 @@ declare namespace Cypress {
      * cy.react(`MyComponent`).should('have.length', 10)
      * cy.react('MyComponent',{name:'Bill'}).should('have.length', 1)
      */
-    react(component: string, props?: {}, state?: {}): Chainable<any>;
+    react(
+      component: string,
+      props?: {},
+      state?: {},
+      options?: Partial<Loggable & Timeoutable>
+    ): Chainable<any>;
 
     /**
      * Get React Node by component, props and state
@@ -42,7 +47,12 @@ declare namespace Cypress {
      * @param props
      * @param state
      */
-    getReact(component: string, props?: {}, state?: {}): Chainable<RESQNode>;
+    getReact(
+      component: string,
+      props?: {},
+      state?: {},
+      options?: Partial<Loggable & Timeoutable>
+    ): Chainable<RESQNode>;
 
     /**
      * Get prop value from React Node.

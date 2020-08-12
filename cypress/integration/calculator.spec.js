@@ -52,7 +52,7 @@ describe('It should validate cypress react selector', () => {
       .should('eq', '5');
   });
 
-  // it.only('it should throw error if node is undefined', () => {
-  //   cy.getReact('App', { name: '5' }).getReact('t').should('be.exist');
+  // it.only('it should validate components not exixts', () => {
+  //   cy.get('.b').get('.c').should('eq', '5');
   // });
 });

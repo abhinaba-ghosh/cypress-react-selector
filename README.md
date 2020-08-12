@@ -289,5 +289,3 @@ Any pull request is welcome.
 ## Before you go
 
 If it works for you , give a [Star](https://github.com/abhinaba-ghosh/cypress-react-selector)! :star:
-
-[Abhinaba Ghosh](https://www.linkedin.com/in/abhinaba-ghosh-9a2ab8a0/)\_

@@ -7,44 +7,67 @@ import { safeStringify, getJsonValue, getType } from './utils';
  * @param {*} props
  * @param {*} state
  */
-export const react = (subject, component, props, state) => {
+export const react = (subject, component, props, state, options = {}) => {
+  if (subject === null) {
+    throw new Error(`Previous component found null.`);
+  }
+
   cy.log(`Finding ${getIdentifierLogs(component, props, state)}`);
 
-  let elements;
-  cy.window({ log: false }).then((window) => {
-    if (!window.resq) {
-      throw new Error(
-        '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
-      );
-    }
-
-    if (subject) {
-      elements = window.resq.resq$$(component, subject[0]);
-    } else {
-      elements = window.resq.resq$$(component);
-    }
-
-    if (props) {
-      elements = elements.byProps(props);
-    }
-    if (state) {
-      elements = elements.byState(state);
-    }
-    if (!elements.length) {
-      return [];
-    }
-    let nodes = [];
-    elements.forEach((elm) => {
-      var node = elm.node,
-        isFragment = elm.isFragment;
-      if (isFragment) {
-        nodes = nodes.concat(node);
-      } else {
-        nodes.push(node);
+  const getNodes = () => {
+    let elements;
+    return cy.window({ log: false }).then((window) => {
+      if (!window.resq) {
+        throw new Error(
+          '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
+        );
       }
+
+      if (subject) {
+        elements = window.resq.resq$$(component, subject[0]);
+      } else {
+        elements = window.resq.resq$$(component);
+      }
+
+      if (props) {
+        elements = elements.byProps(props);
+      }
+      if (state) {
+        elements = elements.byState(state);
+      }
+      if (!elements.length) {
+        cy.log(
+          `Component not found ${getIdentifierLogs(component, props, state)}`
+        );
+        return null;
+      }
+      let nodes = [];
+      elements.forEach((elm) => {
+        var node = elm.node,
+          isFragment = elm.isFragment;
+        if (isFragment) {
+          nodes = nodes.concat(node);
+        } else {
+          nodes.push(node);
+        }
+      });
+      return nodes;
     });
-    return nodes;
+  };
+
+  const resolveValue = () => {
+    return Cypress.Promise.try(getNodes).then((value) => {
+      return cy.verifyUpcomingAssertions(value, options, {
+        onRetry: resolveValue,
+      });
+    });
+  };
+
+  const resultPromise = resolveValue().then((value) => {
+    return value;
   });
+
+  return cy.wrap(resultPromise);
 };
 
 /**
@@ -65,34 +88,54 @@ export const react = (subject, component, props, state) => {
  *   children: RESQNode[]
  * }
  */
-export const getReact = (subject, component, props, state) => {
+export const getReact = (subject, component, props, state, options = {}) => {
+  if (subject === null) {
+    throw new Error(`Previous component found null.`);
+  }
   cy.log(`Finding ${getIdentifierLogs(component, props, state)}`);
 
-  let elements;
-  cy.window({ log: false }).then((window) => {
-    if (!window.resq) {
-      throw new Error(
-        '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
-      );
-    }
-    if (subject) {
-      elements = window.resq.resq$$(component, subject[0].node);
-    } else {
-      elements = window.resq.resq$$(component);
-    }
-    if (props) {
-      elements = elements.byProps(props);
-    }
-    if (state) {
-      elements = elements.byState(state);
-    }
-    if (!elements.length) {
-      throw new Error(
-        `Component not found ${getIdentifierLogs(component, props, state)}`
-      );
-    }
-    return elements;
+  const getReactNodes = () => {
+    let elements;
+    return cy.window({ log: false }).then((window) => {
+      if (!window.resq) {
+        throw new Error(
+          '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
+        );
+      }
+      if (subject) {
+        elements = window.resq.resq$$(component, subject[0].node);
+      } else {
+        elements = window.resq.resq$$(component);
+      }
+      if (props) {
+        elements = elements.byProps(props);
+      }
+      if (state) {
+        elements = elements.byState(state);
+      }
+      if (!elements.length) {
+        cy.log(
+          `Component not found ${getIdentifierLogs(component, props, state)}`
+        );
+        return null;
+      }
+      return elements;
+    });
+  };
+
+  const resolveValue = () => {
+    return Cypress.Promise.try(getReactNodes).then((value) => {
+      return cy.verifyUpcomingAssertions(value, options, {
+        onRetry: resolveValue,
+      });
+    });
+  };
+
+  const resultPromise = resolveValue().then((value) => {
+    return value;
   });
+
+  return cy.wrap(resultPromise);
 };
 
 /**
@@ -102,7 +145,9 @@ export const getReact = (subject, component, props, state) => {
  */
 export const getProps = (subject, propName) => {
   if (!subject || !subject[0].props) {
-    throw new Error('getProps() is a child command. Use with cy.getReact()');
+    throw new Error(
+      'Previous subject found null. getProps() is a child command. Use with cy.getReact()'
+    );
   }
   if (subject.length > 1) {
     throw new Error(
@@ -131,7 +176,7 @@ export const getProps = (subject, propName) => {
 export const getCurrentState = (subject) => {
   if (!subject || !subject[0].state) {
     throw new Error(
-      'getCurrentState() is a child command. Use with cy.getReact()'
+      'Previous subject found null. getCurrentState() is a child command. Use with cy.getReact()'
     );
   }
   if (subject.length > 1) {
