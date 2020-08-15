@@ -9,6 +9,12 @@ declare namespace Cypress {
     props: {};
     children: RESQNode[];
   }
+
+  interface reactOpts {
+    props: {};
+    state: {};
+    root: string;
+  }
   interface Chainable {
     /**
      * Wait until the React's component tree is loaded. Call `cy.waitForReact()` in your test's `before` hook.
@@ -21,7 +27,7 @@ declare namespace Cypress {
      * @param timeout
      * @param reactRoot
      */
-    waitForReact(timeout?: number, reactRoot?: string): Chainable<any>;
+    waitForReact(timeout?: number, reactRoot?: string): void;
 
     /**
      * Get react elements by component, props and states
@@ -30,12 +36,11 @@ declare namespace Cypress {
      * cy.react(`MyComponent`).should('have.length', 10)
      * cy.react('MyComponent',{name:'Bill'}).should('have.length', 1)
      */
-    react(
+    react<E extends Node = HTMLElement>(
       component: string,
-      props?: {},
-      state?: {},
+      reactOpts?: {},
       options?: Partial<Loggable & Timeoutable>
-    ): Chainable<any>;
+    ): Chainable<JQuery<E>>;
 
     /**
      * Get React Node by component, props and state
@@ -49,8 +54,7 @@ declare namespace Cypress {
      */
     getReact(
       component: string,
-      props?: {},
-      state?: {},
+      reactOpts?: {},
       options?: Partial<Loggable & Timeoutable>
     ): Chainable<RESQNode>;
 
