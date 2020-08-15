@@ -1,3 +1,5 @@
+#### 2.0.1 (2020-08-15)
+
 ## 2.0.0 (2020-08-15)
 
 - `react root` selector configuration support added as a `cypress env` parameter
