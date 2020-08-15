@@ -1,3 +1,5 @@
+import { getReactRoot } from './utils';
+
 /**
  * wait for react to be loaded
  * @param {*} timeout
@@ -9,7 +11,7 @@ export const waitForReact = (timeout = 10000, reactRoot) => {
       cy.window({ log: false }).then({ timeout: timeout }, (win) => {
         win.eval(script);
         return new Cypress.Promise.resolve(
-          win.resq.waitToLoadReact(timeout, reactRoot)
+          win.resq.waitToLoadReact(timeout, getReactRoot(reactRoot))
         )
           .then(() => {
             cy.log('[cypress-react-selector] loaded');

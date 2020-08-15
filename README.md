@@ -18,6 +18,7 @@ Internally, cypress-react-selector uses a library called [resq](https://github.c
 - [How to use React Selector?](#how-to-use-react-selector-)
   - [Wait for application to be ready to run tests](#wait-for-application-to-be-ready-to-run-tests)
   - [Wait to Load React for different react roots](#wait-to-load-react-for-different-react-roots)
+  - [The Best Configuration for React root](#the-best-configuration-for-react-root)
   - [Find Element by React Component](#find-element-by-react-component)
   - [Element filtration by Props and States](#element-filtration-by-props-and-states)
   - [Wildcard selection](#wildcard-selection)
@@ -27,7 +28,7 @@ Internally, cypress-react-selector uses a library called [resq](https://github.c
   - [Get current state](#get-current-state)
 - [Use fluent chained queries](#use-fluent-chained-queries)
 - [Sample Tests](#sample-tests)
-- [Sample Example Project](#sample-example-project)
+- [Community Projects](#community-projects)
 - [Tool You Need](#tool-you-need)
 - [Tell me your issues](#tell-me-your-issues)
 - [Contribution](#contribution)
@@ -61,16 +62,9 @@ import 'cypress-react-selector';
 
 ## Alert
 
+- V2.0.0 is breaking change. Find more on `CHANGELOG`
 - cypress-react-selector supports NodeJS 8 or higher
 - It supports React 16 or higher
-
-## Type Definition
-
-```ts
-interface Chainable {
-  react(component: string, props?: {}, state?: {}): Chainable<Element>;
-}
-```
 
 ## How to use React Selector?
 
@@ -114,6 +108,11 @@ cy.waitForReact(30000);
 
 ### Wait to Load React for different react roots
 
+`cypress-react-selector` needs the react root `css-selector` information to identify
+
+- Whether React has loaded
+- Retry React identification queries if state changes in run time/React loads asynchronously
+
 It may even possible that you have different REACT roots (different REACT instances in same application). In this case, you can specify the `CSS Selector` of the target `root`.
 
 ```js
@@ -131,6 +130,22 @@ There is some application which displays react components asynchronously. You ne
 // if your react root is set to different selector other than 'root'
 // then you don't need to pass root element information
 cy.waitForReact(10000, '#mount');
+```
+
+_NOTE_ : The Best Configuration for React root is to declare it as an `env` variable
+
+We always recommend to declare the `react root` as a `env` variable in the `cypress.json` file. It is a best approach rather than passing react root information to `waitForReact` method every time.
+
+As an example:
+
+```json
+{
+  "env": {
+    "cypress-react-selector": {
+      "root": "#root"
+    }
+  }
+}
 ```
 
 ### Find Element by React Component
@@ -151,10 +166,13 @@ it('it should validate react selection with component name', () => {
 You can filter the REACT components by its props and states like below:
 
 ```ts
-cy.react(componentName, { propName: propValue }, { stateName: stateValue });
+cy.react(componentName, {
+  props: { someProp: someValue },
+  state: { someState: someValue },
+});
 
 // for the example APP
-cy.react('MyComponent', { name: 'John' });
+cy.react('MyComponent', { props: { name: 'John' } });
 ```
 
 ### Wildcard selection
@@ -163,10 +181,10 @@ You can select your components by partial name use a wildcard selectors:
 
 ```ts
 // Partial Match
-cy.react('My*', { name: 'John' });
+cy.react('My*', { props: { name: 'John' } });
 
 // Entire Match
-cy.react('*', { name: 'John' }); // return all components matched with the prop
+cy.react('*', { props: { name: 'John' } }); // return all components matched with the prop
 ```
 
 ### Find element by nested props
@@ -203,10 +221,12 @@ then you can use cypress-react-selector to identify the element with nested prop
 
 ```js
 it('enter data into the fields', () => {
-  cy.react('MyTextInput', { field: { name: 'email' } }).type(
+  cy.react('MyTextInput', { props: { field: { name: 'email' } } }).type(
     'john.doe@cypress.com'
   );
-  cy.react('MyTextInput', { field: { name: 'password' } }).type('whyMe?');
+  cy.react('MyTextInput', { props: { field: { name: 'password' } } }).type(
+    'whyMe?'
+  );
 });
 ```
 
@@ -220,17 +240,17 @@ You can get the React properties from a React element and validate the propertie
 
 ```js
 // set the email in the form
-cy.react('MyTextInput', { field: { name: 'email' } }).type(
+cy.react('MyTextInput', { props: { field: { name: 'email' } } }).type(
   'john.doe@cypress.com'
 );
 
 // validate the property runtime
-cy.getReact('MyTextInput', { field: { name: 'email' } })
+cy.getReact('MyTextInput', { props: { field: { name: 'email' } } })
   .getProps('fields.value')
   .should('eq', 'john.doe@cypress.com');
 
 // to get all the props, simply do not pass anything in getProps() method
-cy.getReact('MyTextInput', { field: { name: 'email' } }).getProps();
+cy.getReact('MyTextInput', { props: { field: { name: 'email' } } }).getProps();
 ```
 
 ![get-props](./docs/get-props.png)
@@ -238,7 +258,9 @@ cy.getReact('MyTextInput', { field: { name: 'email' } }).getProps();
 ### Get current state
 
 ```js
-cy.getReact('MyTextInput', { field: { name: 'email' } }).getCurrentState(); // can return string | boolean | any[] | {}
+cy.getReact('MyTextInput', {
+  props: { field: { name: 'email' } },
+}).getCurrentState(); // can return string | boolean | any[] | {}
 ```
 
 ## Use fluent chained queries
@@ -248,7 +270,7 @@ You can chain `react-selector` queries like:
 - fetch `HTMLElements` by chained `react` queries
 
 ```js
-cy.react('MyComponent', { name: 'Bob' })
+cy.react('MyComponent', { props: { name: 'Bob' } })
   .react('MyAge')
   .should('have.text', '50');
 ```
@@ -256,7 +278,7 @@ cy.react('MyComponent', { name: 'Bob' })
 - fetch `react props and states` by chained `getReact` query
 
 ```js
-cy.getReact('MyComponent', { name: 'Bob' })
+cy.getReact('MyComponent', { props: { name: 'Bob' } })
   .getReact('MyAge')
   .getProps('age')
   .should('eq', '50');
@@ -264,15 +286,16 @@ cy.getReact('MyComponent', { name: 'Bob' })
 
 ## Sample Tests
 
-Checkout sample tests [here](./cypress/integration)
+- Checkout basic tests [here](./cypress/integration) (where React-root is passed from `waitForReact` method)
+- Checkout Complex tests [here](./cypress/component/components/ProductsList.spec.js) (React-root configured as `env` parameter)
 
 Use [React Dev Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) plugin to easily identify the react component, props and state. Have a look in the below demonstration, how I have used the tool to write the sample test cases.
 
-![react-dev-tools](./docs/cy-react-dev-tool.gif)
+## Community Projects
 
-## Sample Example Project
+- Credit goes to [Gleb Bahmutov](https://github.com/bahmutov) for drafting how `cypress-react-selector` can be used in `react unit testing` [here](https://github.com/bahmutov/cypress-react-unit-test/blob/main/cypress/component/advanced/react-book-example/src/components/ProductsList.spec.js)
 
-Credit goes to [gregfenton](https://github.com/gregfenton) for presenting a great example that uses Cypress-React-Selector. Checkout the work [here](https://github.com/gregfenton/example-cypress-react-selector-formik)
+- Credit goes to [gregfenton](https://github.com/gregfenton) for presenting a `formik form` example that uses `Cypress-React-Selector`. Checkout the work [here](https://github.com/gregfenton/example-cypress-react-selector-formik)
 
 ## Tool You Need
 
@@ -289,5 +312,3 @@ Any pull request is welcome.
 ## Before you go
 
 If it works for you , give a [Star](https://github.com/abhinaba-ghosh/cypress-react-selector)! :star:
-
-[Abhinaba Ghosh](https://www.linkedin.com/in/abhinaba-ghosh-9a2ab8a0/)\_

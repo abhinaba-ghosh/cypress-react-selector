@@ -13,15 +13,22 @@
   "scripts": {
     "test": "cypress run --headless",
     "format": "npx prettier --write .",
-    "prerelease": "npm run build",
+    "release:major:git": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags",
+    "release:minor:git": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags",
+    "release:patch:git": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags",
     "release:patch": "npm cache clean --force && npm version patch && npm publish --force",
-    "release:minor": "npm cache clean --force && npm version minor && npm publish --force"
+    "release:minor": "npm cache clean --force && npm version minor && npm publish --force",
+    "release:major": "npm cache clean --force && npm version major && npm publish --force"
   },
   "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^4.5.0",
-    "prettier": "^2.0.5"
+    "cypress": "4.6.0",
+    "cypress-react-unit-test": "^4.11.2",
+    "generate-changelog": "^1.8.0",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "dependencies": {
     "resq": "1.8.0"
