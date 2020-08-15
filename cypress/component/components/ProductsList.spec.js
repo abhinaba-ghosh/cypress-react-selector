@@ -20,7 +20,6 @@ describe('Selecting by React props and state', () => {
         });
       mount(<ProductsList />);
 
-      // use https://github.com/abhinaba-ghosh/cypress-react-selector
       // to find DOM elements by React component constructor name, props, or state
       cy.waitForReact();
     });
@@ -38,8 +37,6 @@ describe('Selecting by React props and state', () => {
       cy.react('ProductsContainer')
         .first()
         .should('have.class', 'product-container');
-      // for more ways to find components, see
-      // https://github.com/abhinaba-ghosh/cypress-react-selector#how-to-use-react-selector
       // find all instances of <AProduct> component
       cy.react('AProduct').should('have.length', 2);
       // find a single instance with prop
@@ -71,7 +68,6 @@ describe('Selecting by React props and state', () => {
       );
     });
 
-    // SKIP: https://github.com/bahmutov/cypress-react-unit-test/issues/378
     it('chains getReact', () => {
       // note that by itself, the component is found
       cy.getReact('AProduct', { props: { name: 'First item' } })
@@ -85,7 +81,6 @@ describe('Selecting by React props and state', () => {
         .should('eq', 'First item');
     });
 
-    // SKIP: https://github.com/bahmutov/cypress-react-unit-test/issues/381
     it('finds components by props and state', () => {
       // by clicking on the Order button we change the
       // internal state of that component
@@ -100,13 +95,11 @@ describe('Selecting by React props and state', () => {
         .should('have.text', 'First item');
 
       // now find that component using the state value
-      // DOES NOT WORK FOR SOME REASON
       cy.react('AProduct', { state: { orderCount: 1 } })
         .find('.name')
         .should('have.text', 'First item');
     });
 
-    // SKIP: https://github.com/bahmutov/cypress-react-unit-test/issues/381
     it('finds components by props and state (click twice)', () => {
       // by clicking on the Order button we change the
       // internal state of that component
@@ -123,7 +116,6 @@ describe('Selecting by React props and state', () => {
   });
 
   context('with delay', () => {
-    // SKIP https://github.com/bahmutov/cypress-react-unit-test/issues/379
     it('retries until component is found', () => {
       // or the command times out
       const products = [
@@ -142,7 +134,6 @@ describe('Selecting by React props and state', () => {
         .resolves(Cypress.Promise.resolve(response).delay(1000));
       mount(<ProductsList />);
 
-      // use https://github.com/abhinaba-ghosh/cypress-react-selector
       // to find DOM elements by React component constructor name, props, or state
       cy.waitForReact();
       // cy.react should requery the elements until

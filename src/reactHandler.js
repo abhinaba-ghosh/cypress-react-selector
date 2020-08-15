@@ -1,4 +1,4 @@
-import { getIdentifierLogs } from './logger';
+import { getComponentNotFoundMessage, getIdentifierLogs } from './logger';
 import { safeStringify, getJsonValue, getType, getReactRoot } from './utils';
 
 /**
@@ -31,7 +31,7 @@ export const react = (subject, component, reactOpts = {}, options = {}) => {
       if (subject) {
         elements = window.resq.resq$$(component, subject[0]);
       } else {
-        if (getReactRoot(reactOpts.root)) {
+        if (getReactRoot(reactOpts.root) !== undefined) {
           elements = window.resq.resq$$(
             component,
             document.querySelector(getReactRoot(reactOpts.root))
@@ -48,13 +48,6 @@ export const react = (subject, component, reactOpts = {}, options = {}) => {
         elements = elements.byState(reactOpts.state);
       }
       if (!elements.length) {
-        console.log(
-          `Component not found ${getIdentifierLogs(
-            component,
-            reactOpts.props,
-            reactOpts.state
-          )}`
-        );
         return null;
       }
 
@@ -83,9 +76,19 @@ export const react = (subject, component, reactOpts = {}, options = {}) => {
       });
     };
 
-    return resolveValue().then((value) => {
-      return value;
-    });
+    return resolveValue()
+      .then((value) => {
+        return value;
+      })
+      .catch((err) => {
+        throw new Error(
+          getComponentNotFoundMessage(
+            component,
+            reactOpts.props,
+            reactOpts.state
+          )
+        );
+      });
   });
 };
 
@@ -127,7 +130,7 @@ export const getReact = (subject, component, reactOpts = {}, options = {}) => {
       if (subject) {
         elements = window.resq.resq$$(component, subject[0]);
       } else {
-        if (getReactRoot(reactOpts.root)) {
+        if (getReactRoot(reactOpts.root) !== undefined) {
           elements = window.resq.resq$$(
             component,
             document.querySelector(getReactRoot(reactOpts.root))
@@ -144,13 +147,6 @@ export const getReact = (subject, component, reactOpts = {}, options = {}) => {
         elements = elements.byState(reactOpts.state);
       }
       if (!elements.length) {
-        console.log(
-          `Component not found ${getIdentifierLogs(
-            component,
-            reactOpts.props,
-            reactOpts.state
-          )}`
-        );
         return null;
       }
       return elements;
@@ -164,9 +160,19 @@ export const getReact = (subject, component, reactOpts = {}, options = {}) => {
       });
     };
 
-    return resolveValue().then((value) => {
-      return value;
-    });
+    return resolveValue()
+      .then((value) => {
+        return value;
+      })
+      .catch((err) => {
+        throw new Error(
+          getComponentNotFoundMessage(
+            component,
+            reactOpts.props,
+            reactOpts.state
+          )
+        );
+      });
   });
 };
 

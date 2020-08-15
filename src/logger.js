@@ -31,3 +31,23 @@ export const getIdentifierLogs = (component, props, state) => {
   logMessage += '>**';
   return logMessage;
 };
+
+/**
+ * get the component not found error logs
+ * @param {*} component
+ * @param {*} props
+ * @param {*} state
+ */
+export const getComponentNotFoundMessage = (component, props, state) => {
+  const message = `Component not found ${getIdentifierLogs(
+    component,
+    props,
+    state
+  )}\n\n
+  There can be multiple reasons for it.\n
+  > Check the root is defined as a env parameter (cypress.json config file). Refer: \n
+  > If the root is defined correctly, check other parameters - component name, props and state objects\n
+  
+  Or, raise an issue with proper code samples here: https://github.com/abhinaba-ghosh/cypress-react-selector/issues`;
+  return message;
+};
