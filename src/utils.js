@@ -47,3 +47,17 @@ export const getType = (p) => {
   else if (p != null && typeof p == 'object') return 'object';
   else return 'other';
 };
+
+/**
+ * get the root element
+ * @param {*} root
+ */
+export const getReactRoot = (root) => {
+  if (root) {
+    return root;
+  }
+
+  if (Cypress.env()['cypress-react-selector'].root) {
+    return Cypress.env()['cypress-react-selector'].root;
+  }
+};

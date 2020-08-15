@@ -1,5 +1,5 @@
 import { getIdentifierLogs } from './logger';
-import { safeStringify, getJsonValue, getType } from './utils';
+import { safeStringify, getJsonValue, getType, getReactRoot } from './utils';
 
 /**
  * find react element by component, props and states
@@ -7,16 +7,21 @@ import { safeStringify, getJsonValue, getType } from './utils';
  * @param {*} props
  * @param {*} state
  */
-export const react = (subject, component, props, state, options = {}) => {
+export const react = (subject, component, reactOpts = {}, options = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
   }
 
-  cy.log(`Finding ${getIdentifierLogs(component, props, state)}`);
+  cy.log(
+    `Finding ${getIdentifierLogs(component, reactOpts.props, reactOpts.state)}`
+  );
 
-  const getNodes = () => {
-    let elements;
-    return cy.window({ log: false }).then((window) => {
+  return cy.window({ log: false }).then((window) => {
+    const isPrimitive = (x) =>
+      Cypress._.isNumber(x) || Cypress._.isString(x) || Cypress._.isBoolean(x);
+
+    const getNodes = () => {
+      let elements;
       if (!window.resq) {
         throw new Error(
           '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
@@ -26,21 +31,33 @@ export const react = (subject, component, props, state, options = {}) => {
       if (subject) {
         elements = window.resq.resq$$(component, subject[0]);
       } else {
-        elements = window.resq.resq$$(component);
+        if (getReactRoot(reactOpts.root)) {
+          elements = window.resq.resq$$(
+            component,
+            document.querySelector(getReactRoot(reactOpts.root))
+          );
+        } else {
+          elements = window.resq.resq$$(component);
+        }
       }
 
-      if (props) {
-        elements = elements.byProps(props);
+      if (reactOpts.props) {
+        elements = elements.byProps(reactOpts.props);
       }
-      if (state) {
-        elements = elements.byState(state);
+      if (reactOpts.state) {
+        elements = elements.byState(reactOpts.state);
       }
       if (!elements.length) {
-        cy.log(
-          `Component not found ${getIdentifierLogs(component, props, state)}`
+        console.log(
+          `Component not found ${getIdentifierLogs(
+            component,
+            reactOpts.props,
+            reactOpts.state
+          )}`
         );
         return null;
       }
+
       let nodes = [];
       elements.forEach((elm) => {
         var node = elm.node,
@@ -51,23 +68,25 @@ export const react = (subject, component, props, state, options = {}) => {
           nodes.push(node);
         }
       });
+
       return nodes;
-    });
-  };
+    };
 
-  const resolveValue = () => {
-    return Cypress.Promise.try(getNodes).then((value) => {
-      return cy.verifyUpcomingAssertions(value, options, {
-        onRetry: resolveValue,
+    const resolveValue = () => {
+      return new Cypress.Promise.try(getNodes).then((value) => {
+        if (!isPrimitive(value)) {
+          value = Cypress.$(value);
+        }
+        return cy.verifyUpcomingAssertions(value, options, {
+          onRetry: resolveValue,
+        });
       });
+    };
+
+    return resolveValue().then((value) => {
+      return value;
     });
-  };
-
-  const resultPromise = resolveValue().then((value) => {
-    return value;
   });
-
-  return cy.wrap(resultPromise);
 };
 
 /**
@@ -88,54 +107,67 @@ export const react = (subject, component, props, state, options = {}) => {
  *   children: RESQNode[]
  * }
  */
-export const getReact = (subject, component, props, state, options = {}) => {
+export const getReact = (subject, component, reactOpts = {}, options = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
   }
-  cy.log(`Finding ${getIdentifierLogs(component, props, state)}`);
+  cy.log(
+    `Finding ${getIdentifierLogs(component, reactOpts.props, reactOpts.state)}`
+  );
 
-  const getReactNodes = () => {
-    let elements;
-    return cy.window({ log: false }).then((window) => {
+  return cy.window({ log: false }).then((window) => {
+    const getNodes = () => {
+      let elements;
       if (!window.resq) {
         throw new Error(
           '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
         );
       }
+
       if (subject) {
-        elements = window.resq.resq$$(component, subject[0].node);
+        elements = window.resq.resq$$(component, subject[0]);
       } else {
-        elements = window.resq.resq$$(component);
+        if (getReactRoot(reactOpts.root)) {
+          elements = window.resq.resq$$(
+            component,
+            document.querySelector(getReactRoot(reactOpts.root))
+          );
+        } else {
+          elements = window.resq.resq$$(component);
+        }
       }
-      if (props) {
-        elements = elements.byProps(props);
+
+      if (reactOpts.props) {
+        elements = elements.byProps(reactOpts.props);
       }
-      if (state) {
-        elements = elements.byState(state);
+      if (reactOpts.state) {
+        elements = elements.byState(reactOpts.state);
       }
       if (!elements.length) {
-        cy.log(
-          `Component not found ${getIdentifierLogs(component, props, state)}`
+        console.log(
+          `Component not found ${getIdentifierLogs(
+            component,
+            reactOpts.props,
+            reactOpts.state
+          )}`
         );
         return null;
       }
       return elements;
-    });
-  };
+    };
 
-  const resolveValue = () => {
-    return Cypress.Promise.try(getReactNodes).then((value) => {
-      return cy.verifyUpcomingAssertions(value, options, {
-        onRetry: resolveValue,
+    const resolveValue = () => {
+      return new Cypress.Promise.try(getNodes).then((value) => {
+        return cy.verifyUpcomingAssertions(value, options, {
+          onRetry: resolveValue,
+        });
       });
+    };
+
+    return resolveValue().then((value) => {
+      return value;
     });
-  };
-
-  const resultPromise = resolveValue().then((value) => {
-    return value;
   });
-
-  return cy.wrap(resultPromise);
 };
 
 /**
