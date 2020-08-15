@@ -17,8 +17,6 @@ Internally, cypress-react-selector uses a library called [resq](https://github.c
 - [Type Definition](#type-definition)
 - [How to use React Selector?](#how-to-use-react-selector-)
   - [Wait for application to be ready to run tests](#wait-for-application-to-be-ready-to-run-tests)
-  - [Wait to Load React for different react roots](#wait-to-load-react-for-different-react-roots)
-  - [The Best Configuration for React root](#the-best-configuration-for-react-root)
   - [Find Element by React Component](#find-element-by-react-component)
   - [Element filtration by Props and States](#element-filtration-by-props-and-states)
   - [Wildcard selection](#wildcard-selection)
