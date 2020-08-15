@@ -89,47 +89,18 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### Wait for application to be ready to run tests
 
-To wait until the React's component tree is loaded, add the `waitForReact` method to fixture's `before` hook.
-
-```js
-before(() => {
-  cy.visit('http://localhost:3000/myApp');
-  cy.waitForReact();
-});
-```
-
-this will wait to load react inside your app. `waitForReact` automatically find out the react root of your application.
-
-The default timeout for `waitForReact` is `10000` ms. You can specify a custom timeout value:
-
-```js
-cy.waitForReact(30000);
-```
-
-### Wait to Load React for different react roots
-
 `cypress-react-selector` needs the react root `css-selector` information to identify
 
 - Whether React has loaded
 - Retry React identification queries if state changes in run time/React loads asynchronously
 
-It may even possible that you have different REACT roots (different REACT instances in same application). In this case, you can specify the `CSS Selector` of the target `root`.
+To wait until the React's component tree is loaded, add the `waitForReact` method to fixture's `before` hook.
 
 ```js
-const App = () => (
-  <div id="mount">
-    <MyComponent />
-    <MyComponent name={'John'} />
-  </div>
-);
-```
-
-There is some application which displays react components asynchronously. You need to pass `root selector` information to the react selector.
-
-```ts
-// if your react root is set to different selector other than 'root'
-// then you don't need to pass root element information
-cy.waitForReact(10000, '#mount');
+before(() => {
+  cy.visit('http://localhost:3000/myApp');
+  cy.waitForReact(1000, '#root'); // 1000 is the timeout in milliseconds, you can provide as per AUT
+});
 ```
 
 _NOTE_ : The Best Configuration for React root is to declare it as an `env` variable
@@ -146,6 +117,15 @@ As an example:
     }
   }
 }
+```
+
+If you choose to declare the `root selector` as a `configuration`, then you will have the freedom to call `waitForReact` method without passing the root parameter.
+
+```js
+before(() => {
+  cy.visit('http://localhost:3000/myApp');
+  cy.waitForReact();
+});
 ```
 
 ### Find Element by React Component

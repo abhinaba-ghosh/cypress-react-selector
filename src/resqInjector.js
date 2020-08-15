@@ -17,8 +17,10 @@ export const waitForReact = (timeout = 10000, reactRoot) => {
             cy.log('[cypress-react-selector] loaded');
           })
           .catch((err) => {
-            cy.log(
-              `[cypress-react-selector] root ${reactRoot} is not valid for your application`
+            throw new Error(
+              `[cypress-react-selector] root found as ${reactRoot}. It is not valid root for your application. \n
+              > Make sure to declare root selector as a configuration [recommended]\n
+              > or Pass as a parameter to waitForReact() method`
             );
           });
       });

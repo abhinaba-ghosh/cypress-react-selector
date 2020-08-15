@@ -52,8 +52,14 @@ export const getType = (p) => {
  * get the root element
  * @param {*} root
  */
-export const getReactRoot = (root) =>
-  root ||
-  (Cypress.env()['cypress-react-selector']
-    ? Cypress.env()['cypress-react-selector'].root
-    : undefined);
+export const getReactRoot = (root) => {
+  if (root) {
+    return root;
+  }
+
+  if (Cypress.env()['cypress-react-selector']) {
+    return Cypress.env()['cypress-react-selector'].root;
+  }
+
+  return undefined;
+};

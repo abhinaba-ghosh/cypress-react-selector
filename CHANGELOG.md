@@ -1,5 +1,17 @@
 ## 2.0.0 (2020-08-15)
 
+- `react root` selector configuration support added as a `cypress env` parameter
+
+```json
+{
+  "env": {
+    "cypress-react-selector": {
+      "root": "#root"
+    }
+  }
+}
+```
+
 - From version 2.0 `cypress-react-selector` will be using `reactProps` object
 
 V1.x way of proving react properties for identification
