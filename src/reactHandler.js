@@ -1,5 +1,10 @@
-import { getComponentNotFoundMessage, getIdentifierLogs } from './logger';
-import { safeStringify, getJsonValue, getType, getReactRoot } from './utils';
+const { getComponentNotFoundMessage, getIdentifierLogs } = require('./logger');
+const {
+  safeStringify,
+  getJsonValue,
+  getType,
+  getReactRoot,
+} = require('./utils');
 
 /**
  * find react element by component, props and states
@@ -7,7 +12,7 @@ import { safeStringify, getJsonValue, getType, getReactRoot } from './utils';
  * @param {*} props
  * @param {*} state
  */
-export const react = (subject, component, reactOpts = {}, options = {}) => {
+exports.react = (subject, component, reactOpts = {}, options = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
   }
@@ -110,7 +115,7 @@ export const react = (subject, component, reactOpts = {}, options = {}) => {
  *   children: RESQNode[]
  * }
  */
-export const getReact = (subject, component, reactOpts = {}, options = {}) => {
+exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
   }
@@ -181,7 +186,7 @@ export const getReact = (subject, component, reactOpts = {}, options = {}) => {
  * @param {*} subject
  * @param {*} propName
  */
-export const getProps = (subject, propName) => {
+exports.getProps = (subject, propName) => {
   if (!subject || !subject[0].props) {
     throw new Error(
       'Previous subject found null. getProps() is a child command. Use with cy.getReact()'
@@ -211,7 +216,7 @@ export const getProps = (subject, propName) => {
  * @param {*} subject
  * @param {*} propName
  */
-export const getCurrentState = (subject) => {
+exports.getCurrentState = (subject) => {
   if (!subject || !subject[0].state) {
     throw new Error(
       'Previous subject found null. getCurrentState() is a child command. Use with cy.getReact()'

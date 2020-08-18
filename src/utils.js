@@ -1,7 +1,7 @@
 /**
  * safely handles circular references
  */
-export const safeStringify = (obj, indent = 2) => {
+exports.safeStringify = (obj, indent = 2) => {
   let cache = [];
   const retVal = JSON.stringify(
     obj,
@@ -22,7 +22,7 @@ export const safeStringify = (obj, indent = 2) => {
  * @param {*} object
  * @param {*} keys
  */
-export const getJsonValue = (o, s) => {
+exports.getJsonValue = (o, s) => {
   s = s.replace(/\[(\w+)\]/g, '.$1');
   s = s.replace(/^\./, '');
   var a = s.split('.');
@@ -41,7 +41,7 @@ export const getJsonValue = (o, s) => {
  * get the type of the object
  * @param {*} p
  */
-export const getType = (p) => {
+exports.getType = (p) => {
   if (Array.isArray(p)) return 'array';
   else if (typeof p == 'string') return 'string';
   else if (p != null && typeof p == 'object') return 'object';
@@ -52,7 +52,7 @@ export const getType = (p) => {
  * get the root element
  * @param {*} root
  */
-export const getReactRoot = (root) => {
+exports.getReactRoot = (root) => {
   if (root) {
     return root;
   }

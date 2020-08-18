@@ -19,7 +19,7 @@ const serializeToLog = (props) =>
  * @param {*} props
  * @param {*} state
  */
-export const getIdentifierLogs = (component, props, state) => {
+exports.getIdentifierLogs = (component, props, state) => {
   let logMessage = `**<${markupEscape(component)}`;
   if (props) {
     logMessage += ' ' + serializeToLog(props);
@@ -38,7 +38,7 @@ export const getIdentifierLogs = (component, props, state) => {
  * @param {*} props
  * @param {*} state
  */
-export const getComponentNotFoundMessage = (component, props, state) => {
+exports.getComponentNotFoundMessage = (component, props, state) => {
   const message = `Component not found ${getIdentifierLogs(
     component,
     props,

@@ -1,5 +1,10 @@
-import { waitForReact } from './src/resqInjector';
-import { react, getReact, getProps, getCurrentState } from './src/reactHandler';
+const { waitForReact } = require('./src/resqInjector');
+const {
+  react,
+  getReact,
+  getProps,
+  getCurrentState,
+} = require('./src/reactHandler');
 
 // add cypress custom commands
 Cypress.Commands.add('waitForReact', waitForReact);
