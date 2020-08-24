@@ -1,3 +1,5 @@
+const findReactRetryDelay = 250; // TODO: Find the best value for this
+
 /**
  * wait for react to be loaded
  * @param {*} timeout
@@ -46,7 +48,6 @@ const serializeToLog = (props) =>
  * @param {*} state
  */
 const react = (subject, component, props, state) => {
-  cy.log('subject: ' + subject + ', component: ' + component + ', props: ' + JSON.stringify(props) + ', state: ' + state);
   const startTime = Date.now();
   let logMessage = `Finding **<${markupEscape(component)}`;
   let elements;
@@ -65,7 +66,7 @@ const react = (subject, component, props, state) => {
       const tryFind = () => {
         if (!window.resq) {
           reject(new Error(
-            '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
+            '[cypress-react-selector] not loaded yet. Did you forget to run cy.waitForReact()?'
           ));
           return;
         }
@@ -87,7 +88,7 @@ const react = (subject, component, props, state) => {
             reject(new Error(`React Cypress query timed out after ${Cypress.config('defaultCommandTimeout')}ms.`))
             return;
           }
-          setTimeout(tryFind, 250);
+          setTimeout(tryFind, findReactRetryDelay);
           return;
         }
         let nodes = [];

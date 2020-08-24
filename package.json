@@ -1,6 +1,6 @@
 {
   "name": "cypress-react-selector",
-  "version": "1.2.0",
+  "version": "1.1.1",
   "description": "cypress plugin to locate react elements by component, props and state",
   "main": "./index.js",
   "keywords": [
@@ -19,7 +19,7 @@
     "cypress": "^4.5.0"
   },
   "dependencies": {
-    "resq": "Wine-Dark-Sea/resq#f2e30b9"
+    "resq": "^1.7.1"
   },
   "repository": {
     "type": "git",
