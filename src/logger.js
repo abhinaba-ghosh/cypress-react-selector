@@ -19,7 +19,11 @@ const serializeToLog = (props) =>
  * @param {*} props
  * @param {*} state
  */
-exports.getIdentifierLogs = (component, props, state) => {
+const getIdentifierLogs = (exports.getIdentifierLogs = (
+  component,
+  props,
+  state
+) => {
   let logMessage = `**<${markupEscape(component)}`;
   if (props) {
     logMessage += ' ' + serializeToLog(props);
@@ -30,7 +34,7 @@ exports.getIdentifierLogs = (component, props, state) => {
 
   logMessage += '>**';
   return logMessage;
-};
+});
 
 /**
  * get the component not found error logs
@@ -45,7 +49,7 @@ exports.getComponentNotFoundMessage = (component, props, state) => {
     state
   )}\n\n
   There can be multiple reasons for it.\n
-  > Check the root is defined as a env parameter (cypress.json config file). Refer: \n
+  > Check the root is defined as a env parameter (cypress.json config file).\n
   > If the root is defined correctly, check other parameters - component name, props and state objects\n
   
   Or, raise an issue with proper code samples here: https://github.com/abhinaba-ghosh/cypress-react-selector/issues`;
