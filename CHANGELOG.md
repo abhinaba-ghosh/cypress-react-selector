@@ -1,3 +1,5 @@
+#### 2.0.3 (2020-08-27)
+
 #### 2.0.2 (2020-08-18)
 
 - ES6 `import` and `export` changed to `exports.`
