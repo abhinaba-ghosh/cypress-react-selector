@@ -1,5 +1,6 @@
 {
   "video": false,
+  "screenshotOnRunFailure":false,
   "testFiles": "**/*spec.{js,jsx,ts,tsx}",
   "env": {
     "cypress-react-unit-test": {

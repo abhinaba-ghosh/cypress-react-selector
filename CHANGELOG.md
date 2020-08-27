@@ -1,11 +1,6 @@
 #### 2.0.3 (2020-08-27)
-fixed `getIdentifierLogs not defined`
-
-##### Other Changes
 
 *  getIdentifierLogs not defined ([046562cd](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/046562cdd12cfc290f6772552fd360070ceb73af))
-
-#### 2.0.3 (2020-08-27)
 
 #### 2.0.2 (2020-08-18)
 
