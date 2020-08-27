@@ -1,4 +1,5 @@
 #### 2.0.3 (2020-08-27)
+fixed `getIdentifierLogs not defined`
 
 ##### Other Changes
 
