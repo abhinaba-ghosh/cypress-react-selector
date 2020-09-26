@@ -34,7 +34,7 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
       }
 
       if (subject) {
-        elements = window.resq.resq$$(component, subject[0]);
+        elements = window.resq.resq$$(component, subject);
       } else {
         if (getReactRoot(reactOpts.root) !== undefined) {
           elements = window.resq.resq$$(
@@ -133,7 +133,7 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
       }
 
       if (subject) {
-        elements = window.resq.resq$$(component, subject[0]);
+        elements = window.resq.resq$$(component, subject);
       } else {
         if (getReactRoot(reactOpts.root) !== undefined) {
           elements = window.resq.resq$$(

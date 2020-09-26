@@ -244,6 +244,8 @@ cy.getReact('MyTextInput', {
 
 ## Use fluent chained queries
 
+:warning: Fluent commands are not working in some special cases. It is being tracked [here](https://github.com/abhinaba-ghosh/cypress-react-selector/issues/48)
+
 You can chain `react-selector` queries like:
 
 - fetch `HTMLElements` by chained `react` queries
