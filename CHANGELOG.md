@@ -1,6 +1,24 @@
+#### 2.0.4 (2020-09-26)
+
+- React logic updated with previous subject
+
+```js
+if (subject) {
+  elements = window.resq.resq$$(component, subject[0]);
+}
+```
+
+is now changed to -
+
+```js
+if (subject) {
+  elements = window.resq.resq$$(component, subject);
+}
+```
+
 #### 2.0.3 (2020-08-27)
 
-*  getIdentifierLogs not defined ([046562cd](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/046562cdd12cfc290f6772552fd360070ceb73af))
+- getIdentifierLogs not defined ([046562cd](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/046562cdd12cfc290f6772552fd360070ceb73af))
 
 #### 2.0.2 (2020-08-18)
 
