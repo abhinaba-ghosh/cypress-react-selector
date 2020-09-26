@@ -1,6 +1,20 @@
 #### 2.0.4 (2020-09-26)
 
-- React/getReact logic updated with previous subject
+- React logic updated with previous subject
+
+```js
+if (subject) {
+  elements = window.resq.resq$$(component, subject[0]);
+}
+```
+
+is now changed to -
+
+```js
+if (subject) {
+  elements = window.resq.resq$$(component, subject);
+}
+```
 
 #### 2.0.3 (2020-08-27)
 
