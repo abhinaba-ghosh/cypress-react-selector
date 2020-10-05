@@ -1,3 +1,5 @@
+#### 2.0.5 (2020-10-05)
+
 #### 2.0.4 (2020-09-26)
 
 - React logic updated with previous subject
