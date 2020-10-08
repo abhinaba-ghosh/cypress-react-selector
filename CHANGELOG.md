@@ -1,4 +1,4 @@
-#### 2.0.5 (2020-10-05)
+#### 2.0.6 (2020-10-05)
 
 - Requiring resq dynamically from node_modules
 
