@@ -139,6 +139,13 @@ describe('Selecting by React props and state', () => {
       // cy.react should requery the elements until
       // the assertions that follow it are satisfied,
       // or, if there are no assertions, that an element is found
+
+      cy.getReact('AProduct', {
+        props: { name: 'Second item' },
+      })
+        .getProps('name')
+        .should('eq', 'Second item');
+
       cy.react('AProduct', {
         props: { name: 'Second item' },
       }).should('have.length', '1');

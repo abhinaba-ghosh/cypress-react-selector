@@ -8,7 +8,7 @@ describe('It should validate cypress react selector', () => {
     cy.react('t').should('have.length', '22');
   });
 
-  it('it should validate react selection component and props', () => {
+  it.only('it should validate react selection component and props', () => {
     cy.react('t', { props: { name: '5' } }).should('have.text', '5');
   });
 

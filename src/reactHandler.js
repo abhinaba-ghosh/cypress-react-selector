@@ -4,6 +4,7 @@ const {
   getJsonValue,
   getType,
   getReactRoot,
+  getDefaultCommandOptions,
 } = require('./utils');
 
 /**
@@ -21,80 +22,99 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
     `Finding ${getIdentifierLogs(component, reactOpts.props, reactOpts.state)}`
   );
 
-  return cy.window({ log: false }).then((window) => {
-    const isPrimitive = (x) =>
-      Cypress._.isNumber(x) || Cypress._.isString(x) || Cypress._.isBoolean(x);
+  let retries = Math.floor(getDefaultCommandOptions().timeout / 200);
 
-    const getNodes = () => {
-      let elements;
-      if (!window.resq) {
-        throw new Error(
-          '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
-        );
-      }
+  return cy
+    .window({ log: false })
+    .then({ timeout: getDefaultCommandOptions().timeout + 100 }, (window) => {
+      const isPrimitive = (x) =>
+        Cypress._.isNumber(x) ||
+        Cypress._.isString(x) ||
+        Cypress._.isBoolean(x);
 
-      if (subject) {
-        elements = window.resq.resq$$(component, subject);
-      } else {
-        if (getReactRoot(reactOpts.root) !== undefined) {
-          elements = window.resq.resq$$(
-            component,
-            document.querySelector(getReactRoot(reactOpts.root))
+      const getNodes = () => {
+        let elements;
+        if (!window.resq) {
+          throw new Error(
+            '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
           );
+        }
+
+        if (subject) {
+          elements = window.resq.resq$$(component, subject);
         } else {
-          elements = window.resq.resq$$(component);
+          if (getReactRoot(reactOpts.root) !== undefined) {
+            elements = window.resq.resq$$(
+              component,
+              document.querySelector(getReactRoot(reactOpts.root))
+            );
+          } else {
+            elements = window.resq.resq$$(component);
+          }
         }
-      }
 
-      if (reactOpts.props) {
-        elements = elements.byProps(reactOpts.props);
-      }
-      if (reactOpts.state) {
-        elements = elements.byState(reactOpts.state);
-      }
-      if (!elements.length) {
-        return null;
-      }
-
-      let nodes = [];
-      elements.forEach((elm) => {
-        var node = elm.node,
-          isFragment = elm.isFragment;
-        if (isFragment) {
-          nodes = nodes.concat(node);
-        } else {
-          nodes.push(node);
+        if (reactOpts.props) {
+          elements = elements.byProps(reactOpts.props);
         }
-      });
-
-      return nodes;
-    };
-
-    const resolveValue = () => {
-      return new Cypress.Promise.try(getNodes).then((value) => {
-        if (!isPrimitive(value)) {
-          value = Cypress.$(value);
+        if (reactOpts.state) {
+          elements = elements.byState(reactOpts.state);
         }
-        return cy.verifyUpcomingAssertions(value, options, {
-          onRetry: resolveValue,
+        if (!elements.length) {
+          return null;
+        }
+
+        let nodes = [];
+        elements.forEach((elm) => {
+          var node = elm.node,
+            isFragment = elm.isFragment;
+          if (isFragment) {
+            nodes = nodes.concat(node);
+          } else {
+            nodes.push(node);
+          }
         });
-      });
-    };
 
-    return resolveValue()
-      .then((value) => {
-        return value;
-      })
-      .catch((err) => {
-        throw new Error(
-          getComponentNotFoundMessage(
-            component,
-            reactOpts.props,
-            reactOpts.state
-          )
-        );
-      });
-  });
+        return nodes;
+      };
+
+      const resolveValue = () => {
+        return new Cypress.Promise.try(getNodes).then((value) => {
+          if (!value) {
+            if (retries < 1) {
+              return null;
+            }
+            cy.wait(100, { log: false }).then(() => {
+              retries--;
+              return resolveValue();
+            });
+          }
+          return cy.verifyUpcomingAssertions(value, options, {
+            onRetry: resolveValue,
+          });
+        });
+      };
+
+      return resolveValue()
+        .then((value) => {
+          if (value) {
+            if (isPrimitive(value)) {
+              return value;
+            }
+            return Cypress.$(value);
+          } else {
+            return value;
+          }
+        })
+        .catch((err) => {
+          throw new Error(
+            getComponentNotFoundMessage(
+              component,
+              reactOpts.props,
+              reactOpts.state
+            )
+          );
+        });
+    });
 };
 
 /**
@@ -123,62 +143,75 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
     `Finding ${getIdentifierLogs(component, reactOpts.props, reactOpts.state)}`
   );
 
-  return cy.window({ log: false }).then((window) => {
-    const getNodes = () => {
-      let elements;
-      if (!window.resq) {
-        throw new Error(
-          '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
-        );
-      }
+  let retries = Math.floor(getDefaultCommandOptions().timeout / 200);
 
-      if (subject) {
-        elements = window.resq.resq$$(component, subject);
-      } else {
-        if (getReactRoot(reactOpts.root) !== undefined) {
-          elements = window.resq.resq$$(
-            component,
-            document.querySelector(getReactRoot(reactOpts.root))
+  return cy
+    .window({ log: false })
+    .then({ timeout: getDefaultCommandOptions().timeout + 100 }, (window) => {
+      const getNodes = () => {
+        let elements;
+        if (!window.resq) {
+          throw new Error(
+            '[cypress-react-selector] not loaded yet. did you forget to run cy.waitForReact()?'
           );
-        } else {
-          elements = window.resq.resq$$(component);
         }
-      }
 
-      if (reactOpts.props) {
-        elements = elements.byProps(reactOpts.props);
-      }
-      if (reactOpts.state) {
-        elements = elements.byState(reactOpts.state);
-      }
-      if (!elements.length) {
-        return null;
-      }
-      return elements;
-    };
+        if (subject) {
+          elements = window.resq.resq$$(component, subject);
+        } else {
+          if (getReactRoot(reactOpts.root) !== undefined) {
+            elements = window.resq.resq$$(
+              component,
+              document.querySelector(getReactRoot(reactOpts.root))
+            );
+          } else {
+            elements = window.resq.resq$$(component);
+          }
+        }
 
-    const resolveValue = () => {
-      return new Cypress.Promise.try(getNodes).then((value) => {
-        return cy.verifyUpcomingAssertions(value, options, {
-          onRetry: resolveValue,
+        if (reactOpts.props) {
+          elements = elements.byProps(reactOpts.props);
+        }
+        if (reactOpts.state) {
+          elements = elements.byState(reactOpts.state);
+        }
+        if (!elements.length) {
+          return null;
+        }
+        return elements;
+      };
+
+      const resolveValue = () => {
+        return new Cypress.Promise.try(getNodes).then((value) => {
+          if (!value) {
+            if (retries < 1) {
+              return null;
+            }
+            cy.wait(200, { log: false }).then(() => {
+              retries--;
+              return resolveValue();
+            });
+          }
+          return cy.verifyUpcomingAssertions(value, options, {
+            onRetry: resolveValue,
+          });
         });
-      });
-    };
+      };
 
-    return resolveValue()
-      .then((value) => {
-        return value;
-      })
-      .catch((err) => {
-        throw new Error(
-          getComponentNotFoundMessage(
-            component,
-            reactOpts.props,
-            reactOpts.state
-          )
-        );
-      });
-  });
+      return resolveValue()
+        .then((value) => {
+          return value;
+        })
+        .catch((err) => {
+          throw new Error(
+            getComponentNotFoundMessage(
+              component,
+              reactOpts.props,
+              reactOpts.state
+            )
+          );
+        });
+    });
 };
 
 /**
@@ -187,7 +220,8 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
  * @param {*} propName
  */
 exports.getProps = (subject, propName) => {
-  if (!subject || !subject[0].props) {
+  console.log(subject);
+  if (!subject) {
     throw new Error(
       'Previous subject found null. getProps() is a child command. Use with cy.getReact()'
     );
