@@ -23,9 +23,8 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
   );
 
   // set the retry configuration
-  let retryInterval=100;
+  let retryInterval = 100;
   let retries = Math.floor(getDefaultCommandOptions().timeout / retryInterval);
-
 
   return cy
     .window({ log: false })
@@ -103,17 +102,16 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
         });
       };
 
-      return resolveValue()
-        .then((value) => {
-          if (value) {
-            if (isPrimitive(value)) {
-              return value;
-            }
-            return Cypress.$(value);
-          } else {
+      return resolveValue().then((value) => {
+        if (value) {
+          if (isPrimitive(value)) {
             return value;
           }
-        })
+          return Cypress.$(value);
+        } else {
+          return value;
+        }
+      });
     });
 };
 
@@ -144,7 +142,7 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
   );
 
   // set the retry configuration
-  let retryInterval=100;
+  let retryInterval = 100;
   let retries = Math.floor(getDefaultCommandOptions().timeout / retryInterval);
 
   return cy
@@ -206,10 +204,9 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
         });
       };
 
-      return resolveValue()
-        .then((value) => {
-          return value;
-        })
+      return resolveValue().then((value) => {
+        return value;
+      });
     });
 };
 

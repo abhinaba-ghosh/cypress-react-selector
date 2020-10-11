@@ -42,7 +42,6 @@
     "url": "https://github.com/abhinaba-ghosh/cypress-react-selector/issues"
   },
   "homepage": "https://github.com/abhinaba-ghosh/cypress-react-selector#readme",
-
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -59,5 +58,4 @@
       "npm run format"
     ]
   }
-
 }
