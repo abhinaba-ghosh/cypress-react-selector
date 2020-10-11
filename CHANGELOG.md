@@ -1,8 +1,10 @@
 ### 2.1.0 (2020-10-11)
 
-##### Other Changes
+- bug fix for https://github.com/abhinaba-ghosh/cypress-react-selector/issues/48
 
-- retry react and getReact until node found ([4bb3207c](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/4bb3207c00f84ee494433223db68d62e35f44cee))
+- bug fix for https://github.com/abhinaba-ghosh/cypress-react-selector/issues/42
+
+- retry `cy.react` and `cy.getReact` until node found ([4bb3207c](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/4bb3207c00f84ee494433223db68d62e35f44cee))
 
 #### 2.0.4 (2020-09-26)
 
