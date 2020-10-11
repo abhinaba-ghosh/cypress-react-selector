@@ -22,7 +22,10 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
     `Finding ${getIdentifierLogs(component, reactOpts.props, reactOpts.state)}`
   );
 
-  let retries = Math.floor(getDefaultCommandOptions().timeout / 200);
+  // set the retry configuration
+  let retryInterval=100;
+  let retries = Math.floor(getDefaultCommandOptions().timeout / retryInterval);
+
 
   return cy
     .window({ log: false })
@@ -81,9 +84,15 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
         return new Cypress.Promise.try(getNodes).then((value) => {
           if (!value) {
             if (retries < 1) {
-              return null;
+              throw new Error(
+                getComponentNotFoundMessage(
+                  component,
+                  reactOpts.props,
+                  reactOpts.state
+                )
+              );
             }
-            cy.wait(100, { log: false }).then(() => {
+            cy.wait(retryInterval, { log: false }).then(() => {
               retries--;
               return resolveValue();
             });
@@ -105,15 +114,6 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
             return value;
           }
         })
-        .catch((err) => {
-          throw new Error(
-            getComponentNotFoundMessage(
-              component,
-              reactOpts.props,
-              reactOpts.state
-            )
-          );
-        });
     });
 };
 
@@ -143,7 +143,9 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
     `Finding ${getIdentifierLogs(component, reactOpts.props, reactOpts.state)}`
   );
 
-  let retries = Math.floor(getDefaultCommandOptions().timeout / 200);
+  // set the retry configuration
+  let retryInterval=100;
+  let retries = Math.floor(getDefaultCommandOptions().timeout / retryInterval);
 
   return cy
     .window({ log: false })
@@ -185,9 +187,15 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
         return new Cypress.Promise.try(getNodes).then((value) => {
           if (!value) {
             if (retries < 1) {
-              return null;
+              throw new Error(
+                getComponentNotFoundMessage(
+                  component,
+                  reactOpts.props,
+                  reactOpts.state
+                )
+              );
             }
-            cy.wait(200, { log: false }).then(() => {
+            cy.wait(retryInterval, { log: false }).then(() => {
               retries--;
               return resolveValue();
             });
@@ -202,15 +210,6 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
         .then((value) => {
           return value;
         })
-        .catch((err) => {
-          throw new Error(
-            getComponentNotFoundMessage(
-              component,
-              reactOpts.props,
-              reactOpts.state
-            )
-          );
-        });
     });
 };
 
@@ -220,8 +219,7 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
  * @param {*} propName
  */
 exports.getProps = (subject, propName) => {
-  console.log(subject);
-  if (!subject) {
+  if (!subject || !subject[0].state) {
     throw new Error(
       'Previous subject found null. getProps() is a child command. Use with cy.getReact()'
     );
