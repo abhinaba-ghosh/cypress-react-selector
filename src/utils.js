@@ -63,3 +63,12 @@ exports.getReactRoot = (root) => {
 
   return undefined;
 };
+
+/**
+ * get runtime options
+ */
+exports.getDefaultCommandOptions = () => {
+  return {
+    timeout: Cypress.config().defaultCommandTimeout,
+  };
+};

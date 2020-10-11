@@ -1,6 +1,6 @@
 {
   "name": "cypress-react-selector",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "description": "cypress plugin to locate react elements by component, props and state",
   "main": "./index.js",
   "keywords": [
@@ -26,10 +26,13 @@
     "generate-changelog": "^1.8.0",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "husky": "3.0.0",
+    "lint-staged": "9.2.0",
+    "pretty-quick": "1.11.1"
   },
   "dependencies": {
-    "resq": "1.8.0"
+    "resq": "1.9.0"
   },
   "repository": {
     "type": "git",
@@ -38,5 +41,21 @@
   "bugs": {
     "url": "https://github.com/abhinaba-ghosh/cypress-react-selector/issues"
   },
-  "homepage": "https://github.com/abhinaba-ghosh/cypress-react-selector#readme"
+  "homepage": "https://github.com/abhinaba-ghosh/cypress-react-selector#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": [
+      "pretty-quick --staged"
+    ],
+    "src/**/*.js": [
+      "npm run format"
+    ],
+    "cypress/**/*.js": [
+      "npm run format"
+    ]
+  }
 }
