@@ -1,5 +1,7 @@
 #### 2.1.1 (2020-10-15)
 
+- `resq` upgraded to `1.9.1`. This unblocks the tests in production version.
+
 ### 2.1.0 (2020-10-11)
 
 - bug fix for https://github.com/abhinaba-ghosh/cypress-react-selector/issues/48
