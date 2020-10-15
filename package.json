@@ -32,7 +32,7 @@
     "pretty-quick": "1.11.1"
   },
   "dependencies": {
-    "resq": "1.9.0"
+    "resq": "1.9.1"
   },
   "repository": {
     "type": "git",

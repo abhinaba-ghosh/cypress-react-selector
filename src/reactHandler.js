@@ -96,6 +96,9 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
               return resolveValue();
             });
           }
+          if (!isPrimitive(value)) {
+            value = Cypress.$(value);
+          }
           return cy.verifyUpcomingAssertions(value, options, {
             onRetry: resolveValue,
           });
@@ -103,14 +106,7 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
       };
 
       return resolveValue().then((value) => {
-        if (value) {
-          if (isPrimitive(value)) {
-            return value;
-          }
-          return Cypress.$(value);
-        } else {
-          return value;
-        }
+        return value;
       });
     });
 };
@@ -216,7 +212,7 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
  * @param {*} propName
  */
 exports.getProps = (subject, propName) => {
-  if (!subject || !subject[0].state) {
+  if (!subject || !subject[0].props) {
     throw new Error(
       'Previous subject found null. getProps() is a child command. Use with cy.getReact()'
     );
