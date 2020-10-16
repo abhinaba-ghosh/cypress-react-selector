@@ -32,7 +32,7 @@ class AProduct extends React.Component {
 const Products = ({ products }) => (
   <React.Fragment>
     {products.map((product) => (
-      <AProduct key={product.id} name={product.name} />
+      <AProduct key={product.id} name={product.name} value="product" />
     ))}
   </React.Fragment>
 );

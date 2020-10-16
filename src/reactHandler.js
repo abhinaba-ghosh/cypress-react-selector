@@ -56,10 +56,14 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
         }
 
         if (reactOpts.props) {
-          elements = elements.byProps(reactOpts.props);
+          elements = elements.byProps(reactOpts.props, {
+            exact: reactOpts.exact,
+          });
         }
         if (reactOpts.state) {
-          elements = elements.byState(reactOpts.state);
+          elements = elements.byState(reactOpts.state, {
+            exact: reactOpts.exact,
+          });
         }
         if (!elements.length) {
           return null;
@@ -166,10 +170,14 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
         }
 
         if (reactOpts.props) {
-          elements = elements.byProps(reactOpts.props);
+          elements = elements.byProps(reactOpts.props, {
+            exact: reactOpts.exact,
+          });
         }
         if (reactOpts.state) {
-          elements = elements.byState(reactOpts.state);
+          elements = elements.byState(reactOpts.state, {
+            exact: reactOpts.exact,
+          });
         }
         if (!elements.length) {
           return null;

@@ -41,7 +41,10 @@ describe('Selecting by React props and state', () => {
       cy.react('AProduct').should('have.length', 2);
       // find a single instance with prop
       // <AProduct name={'Second item'} />
-      cy.react('AProduct', { props: { name: 'Second item' } })
+      cy.react('AProduct', {
+        props: { name: 'Second item', value: 'product' },
+        exact: true,
+      })
         .first()
         .find('.name')
         .and('have.text', 'Second item');
@@ -52,7 +55,7 @@ describe('Selecting by React props and state', () => {
       // returns React component wrapper with props
       cy.getReact('AProduct', { props: { name: 'Second item' } })
         .getProps()
-        .should('deep.equal', { name: 'Second item' });
+        .should('deep.include', { name: 'Second item' });
       cy.getReact('AProduct', { props: { name: 'First item' } })
         // get single prop
         .getProps('name')
