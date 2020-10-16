@@ -170,7 +170,6 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
         }
 
         if (reactOpts.props) {
-          console.log(`react opts exact: `, reactOpts.exact);
           elements = elements.byProps(reactOpts.props, {
             exact: reactOpts.exact,
           });
