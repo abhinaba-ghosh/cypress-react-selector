@@ -52,7 +52,8 @@
       "pretty-quick --staged"
     ],
     "src/**/*.js": [
-      "npm run format"
+      "npm run format",
+      "npx cypress run"
     ],
     "cypress/**/*.js": [
       "npm run format"
