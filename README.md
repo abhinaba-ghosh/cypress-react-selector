@@ -164,7 +164,7 @@ If you are in need of matching exactly every property and value in the object (o
 cy.react('MyComponent', { props: { name: 'John' }, exact: true });
 ```
 
-Make sure all the `props` and/or `states` are listed while using this `flag`, if not matched it will returns `undefined`
+Make sure all the `props` and/or `state` are listed while using this `flag`, if not matched it will return `undefined`
 
 ### Wildcard selection
 
