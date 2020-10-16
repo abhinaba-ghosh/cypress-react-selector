@@ -156,6 +156,16 @@ cy.react(componentName, {
 cy.react('MyComponent', { props: { name: 'John' } });
 ```
 
+### Deep Matching with `exact` flag
+
+If you are in need of matching exactly every property and value in the object (or nested objects), you can pass the exact flag to the `cy.react` or `cy.getReact` function:
+
+```ts
+cy.react('MyComponent', { props: { name: 'John' }, exact: true });
+```
+
+Make sure all the `props` and/or `states` are listed while using this `flag`, if not matched it will returns `undefined`
+
 ### Wildcard selection
 
 You can select your components by partial name use a wildcard selectors:
