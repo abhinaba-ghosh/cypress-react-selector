@@ -1,3 +1,5 @@
+### 2.2.0 (2020-10-16)
+
 #### 2.1.1 (2020-10-15)
 
 - `resq` upgraded to `1.9.1`. This unblocks the tests in production version.
