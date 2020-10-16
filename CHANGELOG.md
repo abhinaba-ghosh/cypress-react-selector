@@ -1,5 +1,11 @@
 ### 2.2.0 (2020-10-16)
 
+- Added `exact` flag support. If you are in need of matching exactly every property and value in the object (or nested objects), you can pass the exact flag to the `cy.react` or `cy.getReact` function:
+
+```ts
+cy.react('MyComponent', { props: { name: 'John' }, exact: true });
+```
+
 #### 2.1.1 (2020-10-15)
 
 - `resq` upgraded to `1.9.1`. This unblocks the tests in production version.
