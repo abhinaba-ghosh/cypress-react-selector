@@ -5,17 +5,22 @@ const {
   getType,
   getReactRoot,
   getDefaultCommandOptions,
+  checkReactOptsIsValid,
 } = require('./utils');
 
 /**
  * find react element by component, props and states
- * @param {*} component
- * @param {*} props
- * @param {*} state
+ * @param {String} component
+ * @param {Object} reactOpts
+ * @param {Object} options
  */
 exports.react = (subject, component, reactOpts = {}, options = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
+  }
+
+  if (reactOpts && !checkReactOptsIsValid(reactOpts)) {
+    throw new Error(`ReactOpts is not valid. Valid keys are props and state.`);
   }
 
   cy.log(
@@ -95,7 +100,8 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
                 )
               );
             }
-            cy.wait(retryInterval, { log: false }).then(() => {
+
+            return cy.wait(retryInterval, { log: false }).then(() => {
               retries--;
               return resolveValue();
             });
@@ -117,9 +123,8 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
 
 /**
  * get react node (not actual element) by component, props and state
- * @param {*} component
- * @param {*} props
- * @param {*} state
+ * @param {string} component
+ * @param {Object} reactOpts
  *
  * @example
  * React Node Type:
@@ -137,6 +142,11 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
   }
+
+  if (reactOpts && !checkReactOptsIsValid(reactOpts)) {
+    throw new Error(`ReactOpts is not valid. Valid keys are props and state.`);
+  }
+
   cy.log(
     `Finding ${getIdentifierLogs(component, reactOpts.props, reactOpts.state)}`
   );
@@ -197,7 +207,7 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
                 )
               );
             }
-            cy.wait(retryInterval, { log: false }).then(() => {
+            return cy.wait(retryInterval, { log: false }).then(() => {
               retries--;
               return resolveValue();
             });
