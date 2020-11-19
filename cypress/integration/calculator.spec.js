@@ -10,7 +10,9 @@ describe('It should validate cypress react selector', () => {
 
   // below tests are currently failing due to https://github.com/baruchvlz/resq/issues/60
   it('it should validate react selection component and props', () => {
-    cy.react('t', { props: { name: '5' } }).should('have.text', '5');
+    cy.react('t', {
+      props: { name: '5' },
+    }).should('have.text', '5');
   });
 
   it('it should validate react selection with wildcard', () => {
