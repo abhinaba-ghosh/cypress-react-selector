@@ -1,3 +1,9 @@
+#### 2.2.1 (2020-11-19)
+
+##### Bug Fixes
+
+- Use require.resolve to find resq ([110af23f](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/110af23fbc80c7c120ed43c0315fc9acfc68f25e))
+
 ### 2.2.0 (2020-10-16)
 
 - Added `exact` flag support. If you are in need of matching exactly every property and value in the object (or nested objects), you can pass the exact flag to the `cy.react` or `cy.getReact` function:
