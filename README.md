@@ -147,10 +147,14 @@ it('it should validate react selection with component name', () => {
 You can filter the REACT components by its props and states like below:
 
 ```ts
-cy.react(componentName, {
-  props: { someProp: someValue },
-  state: { someState: someValue },
-});
+cy.react(componentName, reactOpts);
+
+// ReactOpts:
+//{
+//  props: { someProp: someValue },
+//  state: { someState: someValue },
+//  exact: boolean
+//}
 
 // for the example APP
 cy.react('MyComponent', { props: { name: 'John' } });

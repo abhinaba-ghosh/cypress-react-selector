@@ -72,3 +72,18 @@ exports.getDefaultCommandOptions = () => {
     timeout: Cypress.config().defaultCommandTimeout,
   };
 };
+
+/**
+ * Check if ReactOpts is valid
+ * @param {Object} reactOpts
+ */
+exports.checkReactOptsIsValid = (reactOpts) => {
+  const keys = Object.keys(reactOpts);
+  const regexp = /^(?!props$|state|exact$).*/g;
+  const atLeastOneMatches = keys.some((e) => regexp.test(e));
+  if (keys.length > 3 || atLeastOneMatches) {
+    return false;
+  } else {
+    return true;
+  }
+};
