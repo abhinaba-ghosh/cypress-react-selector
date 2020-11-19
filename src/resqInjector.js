@@ -6,7 +6,7 @@ const { getReactRoot } = require('./utils');
  * @param {*} reactRoot
  */
 exports.waitForReact = (timeout = 10000, reactRoot) => {
-  cy.readFile('node_modules/resq/dist/index.js', 'utf8', {
+  cy.readFile(require.resolve('resq'), 'utf8', {
     log: false,
   }).then((script) => {
     cy.window({ log: false }).then({ timeout: timeout }, (win) => {
