@@ -71,11 +71,11 @@ describe('Selecting by React props and state', () => {
       );
     });
 
-    it('chains getReact', () => {
+    it.only('chains getReact', () => {
       // note that by itself, the component is found
-      cy.getReact('AProduct', { props: { name: 'First item' } })
-        .getProps('name')
-        .should('eq', 'First item');
+      // cy.getReact('AProduct', { props: { name: 'First item' } })
+      //   .getProps('name')
+      //   .should('eq', 'First item');
 
       // chaining getReact
       cy.getReact('ProductsContainer')

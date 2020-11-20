@@ -47,8 +47,11 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
           );
         }
 
-        if (subject) {
-          elements = window.resq.resq$$(component, subject);
+        if (subject && subject.length === 1) {
+          console.log('react subject.length: ', subject.length);
+          console.log('react subject: ', subject);
+          elements = window.resq.resq$$(component, subject[0]);
+          console.log('elements:', elements);
         } else {
           if (getReactRoot(reactOpts.root) !== undefined) {
             elements = window.resq.resq$$(
@@ -75,17 +78,15 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
         }
 
         let nodes = [];
-        elements.forEach((elm) => {
-          var node = elm.node,
-            isFragment = elm.isFragment;
+        elements.forEach((element) => {
+          const { node, isFragment } = element;
           if (isFragment) {
             nodes = nodes.concat(node);
           } else {
             nodes.push(node);
           }
         });
-
-        return nodes;
+        return [...nodes];
       };
 
       const resolveValue = () => {
@@ -166,8 +167,28 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
           );
         }
 
-        if (subject) {
-          elements = window.resq.resq$$(component, subject);
+        if (subject && subject.length === 1) {
+          console.log('getReact subject.length: ', subject.length);
+          console.log('getReact subject: ', subject);
+
+          let nodes = [];
+          if (subject[0].name) {
+            console.log('I am queried by getReact only');
+            subject.forEach((element) => {
+              const { node, isFragment } = element;
+              if (isFragment) {
+                nodes = nodes.concat(node);
+              } else {
+                nodes.push(node);
+              }
+            });
+            console.log('getReact subject after: ', nodes);
+          } else {
+            console.log('I am queried by react only');
+            nodes = subject;
+          }
+          elements = window.resq.resq$$(component, nodes[0]);
+          console.log('elements:', elements);
         } else {
           if (getReactRoot(reactOpts.root) !== undefined) {
             elements = window.resq.resq$$(
