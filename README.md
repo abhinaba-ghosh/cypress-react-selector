@@ -95,7 +95,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 - Whether React has loaded
 - Retry React identification queries if state changes in run time/React loads asynchronously
 
-To wait until the React's component tree is loaded, add the `waitForReact` method to fixture's `before` hook.
+In order to make sure that the React component tree has loaded, add the `waitForReact` call immediately after loading a page. Here is an example where it's done in the fixture's `before` hook.
 
 ```js
 before(() => {
