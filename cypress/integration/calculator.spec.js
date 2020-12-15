@@ -8,6 +8,10 @@ describe('It should validate cypress react selector', () => {
     cy.react('t').should('have.length', '22');
   });
 
+  it('it should validate non calculator component should not exists', () => {
+    cy.react('CalculatorCard').should('not.exist');
+  });
+
   // below tests are currently failing due to https://github.com/baruchvlz/resq/issues/60
   it('it should validate react selection component and props', () => {
     cy.react('t', {
