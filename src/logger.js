@@ -43,12 +43,14 @@ const getIdentifierLogs = (exports.getIdentifierLogs = (
  * @param {*} state
  */
 exports.getComponentNotFoundMessage = (component, props, state) => {
-  const message = `Component not found ${getIdentifierLogs(
+  const message = `**Component not found ${getIdentifierLogs(
     component,
     props,
     state
-  )}\n\n
+  )}**\n\n
+  
   There can be multiple reasons for it.\n
+  > Component never meant to exists. You are good to go. 
   > Check the root is defined as a env parameter (cypress.json config file).\n
   > If the root is defined correctly, check other parameters - component name, props and state objects\n
   
