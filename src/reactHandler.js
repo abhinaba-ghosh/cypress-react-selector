@@ -92,13 +92,14 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
         return new Cypress.Promise.try(getNodes).then((value) => {
           if (!value) {
             if (retries < 1) {
-              throw new Error(
+              cy.log(
                 getComponentNotFoundMessage(
                   component,
                   reactOpts.props,
                   reactOpts.state
                 )
               );
+              return;
             }
 
             return cy.wait(retryInterval, { log: false }).then(() => {
@@ -199,7 +200,7 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
         return new Cypress.Promise.try(getNodes).then((value) => {
           if (!value) {
             if (retries < 1) {
-              throw new Error(
+              cy.log(
                 getComponentNotFoundMessage(
                   component,
                   reactOpts.props,
