@@ -6,7 +6,7 @@ const { getReactRoot } = require('./utils');
  * @param {*} reactRoot
  */
 exports.waitForReact = (timeout = 10000, reactRoot) => {
-  cy.readFile(require.resolve('resq'), 'utf8', {
+  cy.readFile(getResqBinary(), 'utf8', {
     log: false,
   }).then((script) => {
     cy.window({ log: false }).then({ timeout: timeout }, (win) => {
@@ -26,4 +26,18 @@ exports.waitForReact = (timeout = 10000, reactRoot) => {
         });
     });
   });
+};
+
+/**
+ * Returns resq binary location
+ *
+ * There can be a even good way to  fetch the binary
+ * refer: https://github.com/abhinaba-ghosh/cypress-react-selector/issues/120
+ */
+const getResqBinary = () => {
+  let resqBinary = require.resolve('resq');
+  if (typeof resqBinary === 'string' && resqBinary.includes('resq')) {
+    return resqBinary;
+  }
+  return ' ./node_modules/resq/dist/index.js';
 };
