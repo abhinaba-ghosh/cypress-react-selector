@@ -36,7 +36,7 @@ exports.waitForReact = (timeout = 10000, reactRoot) => {
  */
 const getResqBinary = () => {
   let resqBinary = require.resolve('resq');
-  if (typeof resqBinary === 'string' && resqBinary.includes('resq')) {
+  if (typeof resqBinary === 'string' && resqBinary.length > 0) {
     return resqBinary;
   }
   return ' ./node_modules/resq/dist/index.js';
