@@ -52,7 +52,7 @@ describe('Selecting by React props and state', () => {
 
     it('find React components', () => {
       cy.log('**cy.getReact**');
-      // returns React component wrapper with props
+      //returns React component wrapper with props
       cy.getReact('AProduct', { props: { name: 'Second item' } })
         .getProps()
         .should('deep.include', { name: 'Second item' });
@@ -69,6 +69,12 @@ describe('Selecting by React props and state', () => {
       cy.getReact('AProduct', { state: { myName: 'Second item' } }).should(
         'exist'
       );
+
+      //find component using index
+      cy.getReact('AProduct')
+        .nthNode(1)
+        .getProps('name')
+        .should('eq', 'Second item');
     });
 
     it('chains getReact', () => {

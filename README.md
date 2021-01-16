@@ -27,6 +27,8 @@ Internally, cypress-react-selector uses a library called [resq](https://github.c
 - [Get React Properties from element](#get-react-properties-from-element)
   - [Get Props](#get-props)
   - [Get current state](#get-current-state)
+- [Timeouts](#timeouts)
+- [Fetch indexed node](#fetch-indexed-node)
 - [Use fluent chained queries](#use-fluent-chained-queries)
 - [Sample Tests](#sample-tests)
 - [Community Projects](#community-projects)
@@ -256,6 +258,31 @@ cy.getReact('MyTextInput', { props: { field: { name: 'email' } } }).getProps();
 cy.getReact('MyTextInput', {
   props: { field: { name: 'email' } },
 }).getCurrentState(); // can return string | boolean | any[] | {}
+```
+
+## Timeouts
+
+You can configure the [timeouts](https://docs.cypress.io/guides/references/configuration.html#Timeouts) in the `cypress.json` configuration file. Alternatively, you can also pass the `timeout` as a object literal in the react commands like,
+
+```js
+cy.react('MyComponent', { options: { timeout: 50000 } });
+```
+
+## Fetch indexed node
+
+1. `cy.react` returns DOM element, so you can fetch the indexed node by [.eq(index)](https://docs.cypress.io/api/commands/eq.html), like:
+
+```js
+cy.react('MyComponent').eq(0).click();
+```
+
+2. `cy.getReact()` return RESQ node, so you can't fetch it through `.eq()`. You need to use `.nthNode(index)`, like:
+
+```js
+cy.getReact('MyComponent')
+  .nthNode(0)
+  .getProps('name')
+  .should('eq', 'First Item');
 ```
 
 ## Use fluent chained queries

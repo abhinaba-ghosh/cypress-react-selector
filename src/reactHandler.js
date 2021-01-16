@@ -6,6 +6,7 @@ const {
   getReactRoot,
   getDefaultCommandOptions,
   checkReactOptsIsValid,
+  getReactNode,
 } = require('./utils');
 
 /**
@@ -253,53 +254,41 @@ exports.getReact = (subject, component, reactOpts = {}) => {
  * @param {*} propName
  */
 exports.getProps = (subject, propName) => {
-  if (!subject || !subject[0].props) {
-    throw new Error(
-      'Previous subject found null. getProps() is a child command. Use with cy.getReact()'
-    );
-  }
-  if (subject.length > 1) {
-    throw new Error(
-      `getProps() works with single React Node. React Node found ${subject.length}`
-    );
-  }
+  const reactNode = getReactNode(subject);
   cy.log(`Finding value for prop **${propName || 'all props'}**`);
   cy.log(
     `Prop value found **${
       propName
-        ? safeStringify(getJsonValue(subject[0].props, propName))
-        : safeStringify(subject[0].props)
+        ? safeStringify(getJsonValue(reactNode.props, propName))
+        : safeStringify(reactNode.props)
     }**`
   );
   const propValue = propName
-    ? cy.wrap(getJsonValue(subject[0].props, propName))
-    : cy.wrap(subject[0].props);
+    ? cy.wrap(getJsonValue(reactNode.props, propName))
+    : cy.wrap(reactNode.props);
   return propValue;
 };
 
 /**
  * get all props or specific props from react node
  * @param {*} subject
- * @param {*} propName
  */
 exports.getCurrentState = (subject) => {
-  if (!subject || !subject[0].state) {
-    throw new Error(
-      'Previous subject found null. getCurrentState() is a child command. Use with cy.getReact()'
-    );
-  }
-  if (subject.length > 1) {
-    throw new Error(
-      `getCurrentState() works with single React Node. React Node found ${subject.length}`
-    );
-  }
+  const reactNode = getReactNode(subject);
   cy.log(`Finding current state of the React component`);
   cy.log(
     `Current state found **${
-      getType(subject[0].state) === 'object'
-        ? safeStringify(subject[0].state)
-        : subject[0].state
+      getType(reactNode.state) === 'object'
+        ? safeStringify(reactNode.state)
+        : reactNode.state
     }**`
   );
-  return cy.wrap(subject[0].state);
+  return cy.wrap(reactNode.state);
 };
+
+/**
+ *  Get nth Node
+ * @param {object} subject
+ * @param {number} pos
+ */
+exports.nthNode = (subject, pos) => cy.wrap(subject).then((e) => e[pos]);
