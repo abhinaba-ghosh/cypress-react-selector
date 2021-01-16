@@ -14,7 +14,7 @@ const {
  * @param {Object} reactOpts
  * @param {Object} options
  */
-exports.react = (subject, component, reactOpts = {}, options = {}) => {
+exports.react = (subject, component, reactOpts = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
   }
@@ -29,11 +29,15 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
 
   // set the retry configuration
   let retryInterval = 100;
-  let retries = Math.floor(getDefaultCommandOptions().timeout / retryInterval);
+  let retries = Math.floor(
+    getDefaultCommandOptions(reactOpts).timeout / retryInterval
+  );
 
-  return cy
-    .window({ log: false })
-    .then({ timeout: getDefaultCommandOptions().timeout + 100 }, (window) => {
+  return cy.window({ log: false }).then(
+    {
+      timeout: getDefaultCommandOptions(reactOpts).timeout + 100,
+    },
+    (window) => {
       const isPrimitive = (x) =>
         Cypress._.isNumber(x) ||
         Cypress._.isString(x) ||
@@ -102,15 +106,19 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
               return;
             }
 
-            return cy.wait(retryInterval, { log: false }).then(() => {
-              retries--;
-              return resolveValue();
-            });
+            return cy
+              .wait(retryInterval, {
+                log: false,
+              })
+              .then(() => {
+                retries--;
+                return resolveValue();
+              });
           }
           if (!isPrimitive(value)) {
             value = Cypress.$(value);
           }
-          return cy.verifyUpcomingAssertions(value, options, {
+          return cy.verifyUpcomingAssertions(value, reactOpts?.options, {
             onRetry: resolveValue,
           });
         });
@@ -119,7 +127,8 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
       return resolveValue().then((value) => {
         return value;
       });
-    });
+    }
+  );
 };
 
 /**
@@ -139,7 +148,7 @@ exports.react = (subject, component, reactOpts = {}, options = {}) => {
  *   children: RESQNode[]
  * }
  */
-exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
+exports.getReact = (subject, component, reactOpts = {}) => {
   if (subject === null) {
     throw new Error(`Previous component found null.`);
   }
@@ -154,11 +163,15 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
 
   // set the retry configuration
   let retryInterval = 100;
-  let retries = Math.floor(getDefaultCommandOptions().timeout / retryInterval);
+  let retries = Math.floor(
+    getDefaultCommandOptions(reactOpts).timeout / retryInterval
+  );
 
-  return cy
-    .window({ log: false })
-    .then({ timeout: getDefaultCommandOptions().timeout + 100 }, (window) => {
+  return cy.window({ log: false }).then(
+    {
+      timeout: getDefaultCommandOptions(reactOpts).timeout + 100,
+    },
+    (window) => {
       const getNodes = () => {
         let elements;
         if (!window.resq) {
@@ -208,12 +221,16 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
                 )
               );
             }
-            return cy.wait(retryInterval, { log: false }).then(() => {
-              retries--;
-              return resolveValue();
-            });
+            return cy
+              .wait(retryInterval, {
+                log: false,
+              })
+              .then(() => {
+                retries--;
+                return resolveValue();
+              });
           }
-          return cy.verifyUpcomingAssertions(value, options, {
+          return cy.verifyUpcomingAssertions(value, reactOpts?.options, {
             onRetry: resolveValue,
           });
         });
@@ -222,7 +239,8 @@ exports.getReact = (subject, component, reactOpts = {}, options = {}) => {
       return resolveValue().then((value) => {
         return value;
       });
-    });
+    }
+  );
 };
 
 /**
