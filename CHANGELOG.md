@@ -1,3 +1,5 @@
+### 2.3.0 (2021-01-16)
+
 #### 2.2.2 (2020-12-15)
 
 - Bug fix - https://github.com/abhinaba-ghosh/cypress-react-selector/pull/113
