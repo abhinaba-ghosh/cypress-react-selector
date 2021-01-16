@@ -38,8 +38,13 @@ declare namespace Cypress {
      */
     react<E extends Node = HTMLElement>(
       component: string,
-      reactOpts?: {},
-      options?: Partial<Loggable & Timeoutable>
+      reactOpts?: {
+        props?: object;
+        state?: object;
+        exact?: boolean;
+        root?: string;
+        options?: Partial<Loggable & Timeoutable>;
+      }
     ): Chainable<JQuery<E>>;
 
     /**
@@ -54,8 +59,13 @@ declare namespace Cypress {
      */
     getReact(
       component: string,
-      reactOpts?: {},
-      options?: Partial<Loggable & Timeoutable>
+      reactOpts?: {
+        props?: object;
+        state?: object;
+        exact?: boolean;
+        root?: string;
+        options?: Partial<Loggable & Timeoutable>;
+      }
     ): Chainable<RESQNode>;
 
     /**
@@ -78,5 +88,14 @@ declare namespace Cypress {
      * This method should always be used with getReact() method
      */
     getCurrentState(): Chainable<any>;
+
+    /**
+     * Get the nthNode using index
+     * @param index
+     *
+     * @example
+     * cy.getReact('Product').nthNode(0).getProps('name').should('eq', 'First item');
+     */
+    nthNode(index: string): Chainable<any>;
   }
 }

@@ -88,3 +88,26 @@ exports.checkReactOptsIsValid = (reactOpts) => {
     return true;
   }
 };
+
+/**
+ * Validate and get resq node for fetching props and states
+ * @param {object || object[]} subject
+ */
+exports.getReactNode = (subject) => {
+  if (!subject) {
+    throw new Error(
+      'Previous subject found null. getCurrentState() is a child command. Use with cy.getReact()'
+    );
+  }
+  if (
+    Array.isArray(subject) &&
+    (subject[0].props || subject[0].state) &&
+    subject.length > 1
+  ) {
+    throw new Error(
+      `getCurrentState() works with single React Node. Number of React Node found ${subject.length}. Use nthNode(index) to fetch an unique react node`
+    );
+  }
+
+  return Array.isArray(subject) ? subject[0] : subject;
+};
