@@ -67,9 +67,10 @@ exports.getReactRoot = (root) => {
 /**
  * get runtime options
  */
-exports.getDefaultCommandOptions = () => {
+exports.getDefaultCommandOptions = (reactOpts) => {
   return {
-    timeout: Cypress.config().defaultCommandTimeout,
+    timeout:
+      reactOpts?.options?.timeout || Cypress.config().defaultCommandTimeout,
   };
 };
 
@@ -79,7 +80,7 @@ exports.getDefaultCommandOptions = () => {
  */
 exports.checkReactOptsIsValid = (reactOpts) => {
   const keys = Object.keys(reactOpts);
-  const regexp = /^(?!props$|state|exact$).*/g;
+  const regexp = /^(?!props$|state|exact|options|root$).*/g;
   const atLeastOneMatches = keys.some((e) => regexp.test(e));
   if (keys.length > 3 || atLeastOneMatches) {
     return false;
