@@ -20,7 +20,9 @@ exports.react = (subject, component, reactOpts = {}) => {
   }
 
   if (reactOpts && !checkReactOptsIsValid(reactOpts)) {
-    throw new Error(`ReactOpts is not valid. Valid keys are props and state.`);
+    throw new Error(
+      `ReactOpts is not valid. Valid keys are props,state,exact,root,options.`
+    );
   }
 
   cy.log(
@@ -154,7 +156,9 @@ exports.getReact = (subject, component, reactOpts = {}) => {
   }
 
   if (reactOpts && !checkReactOptsIsValid(reactOpts)) {
-    throw new Error(`ReactOpts is not valid. Valid keys are props and state.`);
+    throw new Error(
+      `ReactOpts is not valid. Valid keys are props,state,exact,root,options.`
+    );
   }
 
   cy.log(
