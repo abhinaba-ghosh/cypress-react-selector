@@ -1,5 +1,9 @@
 ### 2.3.0 (2021-01-16)
 
+- Bug fix - https://github.com/abhinaba-ghosh/cypress-react-selector/issues/120
+- Added support for passing `timeout` as object literal for react commands - https://github.com/abhinaba-ghosh/cypress-react-selector/issues/119
+- Added support for fetch nthNode from RESQ nodes - https://github.com/abhinaba-ghosh/cypress-react-selector/issues/123
+
 #### 2.2.2 (2020-12-15)
 
 - Bug fix - https://github.com/abhinaba-ghosh/cypress-react-selector/pull/113
