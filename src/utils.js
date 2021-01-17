@@ -105,7 +105,7 @@ exports.getReactNode = (subject) => {
     subject.length > 1
   ) {
     throw new Error(
-      `getCurrentState() works with single React Node. Number of React Node found ${subject.length}. Use nthNode(index) to fetch an unique react node`
+      `getCurrentState/getProps works with single React Node. Number of React Node found ${subject.length}. Use nthNode(index) to fetch an unique react node`
     );
   }
 
