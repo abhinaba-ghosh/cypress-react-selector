@@ -96,6 +96,6 @@ declare namespace Cypress {
      * @example
      * cy.getReact('Product').nthNode(0).getProps('name').should('eq', 'First item');
      */
-    nthNode(index: string): Chainable<any>;
+    nthNode(index: number): Chainable<any>;
   }
 }
