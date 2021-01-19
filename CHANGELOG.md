@@ -1,6 +1,10 @@
 #### 2.3.3 (2021-01-19)
 
+- Bugfix - https://github.com/abhinaba-ghosh/cypress-react-selector/issues/123
+
 #### 2.3.2 (2021-01-19)
+
+- Bugfix -https://github.com/abhinaba-ghosh/cypress-react-selector/issues/128
 
 #### 2.3.1 (2021-01-17)
 
