@@ -121,7 +121,7 @@ exports.react = (subject, component, reactOpts = {}) => {
           if (!isPrimitive(value)) {
             value = Cypress.$(value);
           }
-          return cy.verifyUpcomingAssertions(value, reactOpts?.options, {
+          return cy.verifyUpcomingAssertions(value, (reactOpts || {}).options, {
             onRetry: resolveValue,
           });
         });
@@ -235,7 +235,7 @@ exports.getReact = (subject, component, reactOpts = {}) => {
                 return resolveValue();
               });
           }
-          return cy.verifyUpcomingAssertions(value, reactOpts?.options, {
+          return cy.verifyUpcomingAssertions(value, (reactOpts || {}).options, {
             onRetry: resolveValue,
           });
         });
