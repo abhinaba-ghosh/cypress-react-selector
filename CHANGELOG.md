@@ -1,7 +1,5 @@
 #### 2.3.4 (2021-01-22)
 
-##### Other Changes
-
 - Handle type error of require.resolve being used in older version of node ([#133](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/133)) ([81b5af4b](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/81b5af4bb721aa1e52d60fe5144dfba52ce31584))
 
 #### 2.3.3 (2021-01-19)
