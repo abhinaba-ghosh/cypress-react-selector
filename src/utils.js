@@ -70,7 +70,8 @@ exports.getReactRoot = (root) => {
 exports.getDefaultCommandOptions = (reactOpts) => {
   return {
     timeout:
-      ((reactOpts || {}).options || {}).timeout || Cypress.config().defaultCommandTimeout,
+      ((reactOpts || {}).options || {}).timeout ||
+      Cypress.config().defaultCommandTimeout,
   };
 };
 
