@@ -6,10 +6,9 @@ const { getReactRoot } = require('./utils');
  * @param {*} reactRoot
  */
 exports.waitForReact = (timeout = 10000, reactRoot) => {
-  const file =
-    require?.resolve && typeof require?.resolve === 'function'
-      ? require.resolve('resq')
-      : 'node_modules/resq/dist/index.js';
+  const file = require.hasOwnProperty('resolve')
+    ? require.resolve('resq')
+    : 'node_modules/resq/dist/index.js';
 
   cy.readFile(file, 'utf8', {
     log: false,
