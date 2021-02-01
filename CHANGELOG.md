@@ -1,5 +1,7 @@
 #### 2.3.5 (2021-02-01)
 
+- Updated Resq fetch mechanism. Refer: https://github.com/abhinaba-ghosh/cypress-react-selector/issues/94
+
 #### 2.3.4 (2021-01-22)
 
 - Handle type error of require.resolve being used in older version of node ([#133](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/133)) ([81b5af4b](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/81b5af4bb721aa1e52d60fe5144dfba52ce31584))
