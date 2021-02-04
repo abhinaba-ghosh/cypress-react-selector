@@ -225,6 +225,7 @@ exports.getReact = (subject, component, reactOpts = {}) => {
                   reactOpts.state
                 )
               );
+              return;
             }
             return cy
               .wait(retryInterval, {
