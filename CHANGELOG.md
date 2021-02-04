@@ -1,5 +1,7 @@
 #### 2.3.6 (2021-02-04)
 
+- bug fix ([$136](https://github.com/abhinaba-ghosh/cypress-react-selector/issues/136))
+
 #### 2.3.5 (2021-02-01)
 
 - Updated Resq fetch mechanism. Refer: https://github.com/abhinaba-ghosh/cypress-react-selector/issues/94
