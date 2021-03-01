@@ -21,7 +21,7 @@
   "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "6.5.0",
+    "cypress": "6.6.0",
     "cypress-react-unit-test": "^4.11.2",
     "generate-changelog": "^1.8.0",
     "prettier": "^2.0.5",
