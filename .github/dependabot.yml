@@ -1,0 +1,29 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "23:30"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@cypress/webpack-dev-server"
+    versions:
+    - 1.1.3
+    - 1.1.4
+  - dependency-name: "@cypress/react"
+    versions:
+    - 5.3.3
+    - 5.3.4
+  - dependency-name: cypress
+    versions:
+    - 6.6.0
+    - 6.7.0
+    - 6.7.1
+    - 7.0.0
+  - dependency-name: husky
+    versions:
+    - 5.1.1
+    - 5.1.2
+    - 5.1.3
+    - 5.2.0
