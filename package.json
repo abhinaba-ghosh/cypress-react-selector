@@ -11,7 +11,7 @@
     "cypress-io"
   ],
   "scripts": {
-    "test": "cypress run --headless",
+    "test": "cypress run --headless && cypress run-ct",
     "format": "npx prettier --write .",
     "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags && npm run release",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags && npm run release",
@@ -25,12 +25,14 @@
     "@cypress/webpack-dev-server": "^1.1.2",
     "cypress": "7.2.0",
     "generate-changelog": "^1.8.0",
+    "html-webpack-plugin": "4",
     "husky": "6.0.0",
     "lint-staged": "11.0.0",
     "prettier": "^2.0.5",
     "pretty-quick": "3.1.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3"
   },
   "dependencies": {
     "resq": "1.10.0"

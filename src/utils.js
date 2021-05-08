@@ -57,8 +57,8 @@ exports.getReactRoot = (root) => {
     return root;
   }
 
-  if (Cypress.env()['cypress-react-selector']) {
-    return Cypress.env()['cypress-react-selector'].root;
+  if (Cypress.env('cypress-react-selector')) {
+    return Cypress.env('cypress-react-selector').root;
   }
 
   return undefined;
