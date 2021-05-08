@@ -17,7 +17,7 @@ jobs:
           command: npm i
       - run:
           name: integration test
-          command: npx cypress test
+          command: npx cypress run
       - run:
           name: component test
           command: npx cypress test-ct
