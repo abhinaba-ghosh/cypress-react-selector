@@ -1,7 +1,23 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
+
+jobs:
+  test-cypress-react-selector:
+    executor: cypress/base-14
+    steps: 
+      - checkout
+      - run :
+          name: install packages
+          command: npm i
+      - run:
+          name: integration test
+          command: npx cypress run
+      - run:
+          name: component test
+          command: npx cypress run-ct
+
 workflows:
   build:
     jobs:
-      - cypress/run
+      - test-cypress-react-selector

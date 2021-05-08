@@ -5,7 +5,7 @@ describe('It should validate cypress react selector', () => {
   });
 
   it('it should validate react selection with component only', () => {
-    cy.react('t').should('have.length', '22');
+    cy.get('.component-app').react('t').should('have.length', '21');
   });
 
   it('it should validate non calculator component should not exists', () => {
