@@ -15,7 +15,7 @@ jobs:
           command: npx cypress run
       - run:
           name: component test
-          command: npx cypress test-ct
+          command: npx cypress run-ct
 
 workflows:
   build:
