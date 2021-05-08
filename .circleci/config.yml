@@ -2,14 +2,9 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
 
-executors:
-  node-executor:
-    docker:
-      - image: cimg/node:14.16.0 
-
 jobs:
   test-cypress-react-selector:
-    executor: node-executor
+    executor: cypress/base-14
     steps: 
       - checkout
       - run :
