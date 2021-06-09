@@ -1,10 +1,11 @@
 #### 2.3.8 (2021-06-09)
 
+- fixed getProps error message
+- Added shadowDOm example
+
 #### 2.3.7 (2021-05-08)
 
-##### Other Changes
-
-*  fixed chaining with cy.get ([#182](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/182)) ([338fdd57](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/338fdd570a39cd5c5972d92eb9bb76405a8c2888))
+- fixed chaining with cy.get ([#182](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/182)) ([338fdd57](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/338fdd570a39cd5c5972d92eb9bb76405a8c2888))
 
 #### 2.3.6 (2021-02-04)
 
