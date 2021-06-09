@@ -97,7 +97,7 @@ exports.checkReactOptsIsValid = (reactOpts) => {
 exports.getReactNode = (subject) => {
   if (!subject) {
     throw new Error(
-      'Previous subject found null. getCurrentState() is a child command. Use with cy.getReact()'
+      'Previous subject found null. getProps/getCurrentState is a child command. Use with cy.getReact()'
     );
   }
   if (

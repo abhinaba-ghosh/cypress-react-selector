@@ -8,7 +8,8 @@
     "cypress",
     "cypress-plugin",
     "cypress-react",
-    "cypress-io"
+    "cypress-io",
+    "cypress-react-selector"
   ],
   "scripts": {
     "test": "cypress run --headless && cypress run-ct",
@@ -32,7 +33,8 @@
     "pretty-quick": "3.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^4.0.3",
+    "react-shadow-root": "^5.0.4"
   },
   "dependencies": {
     "resq": "1.10.0"

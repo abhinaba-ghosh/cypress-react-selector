@@ -5,17 +5,16 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![NPM Downloads](https://img.shields.io/npm/dt/cypress-react-selector.svg?style=flat-square)](https://www.npmjs.com/package/cypress-react-selector)
 
-_cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states. This extension allow you to select page elements in a way that is native to React. This will help you in functional UI tests and E2E tests.
+_cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states. This extension allow you to select elements in a way that is native to React. Designed to help developers in component, integration and E2E testing.
 
 Internally, cypress-react-selector uses a library called [resq](https://github.com/baruchvlz/resq) to query React's VirtualDOM in order to retrieve the nodes.
-
 
 ## Table of Contents
 
 - [Install and configure](#install-and-configure)
   - [Add as a dependency:](#add-as-a-dependency-)
   - [Include the commands](#include-the-commands)
-- [Alert](#alert)
+- [Highlights](#highlights)
 - [Type Definition](#type-definition)
 - [How to use React Selector?](#how-to-use-react-selector-)
   - [Wait for application to be ready to run tests](#wait-for-application-to-be-ready-to-run-tests)
@@ -62,11 +61,15 @@ import 'cypress-react-selector';
 }
 ```
 
-## Alert
+## Highlights
 
-- V2.0.0 is breaking change. Find more on `CHANGELOG`
 - cypress-react-selector supports NodeJS 8 or higher
 - It supports React 16 or higher
+- Retries each interaction until timeout to handle asynchronous calls
+- Supports shadow DOM
+- Supports wildcard selection for component names
+- Supports nested Props
+- Supports assertion on real-time react properties (props and states)
 
 ## How to use React Selector?
 
@@ -286,9 +289,14 @@ cy.getReact('MyComponent')
 
 ## Use fluent chained queries
 
-:warning: Fluent commands are not working in some special cases. It is being tracked [here](https://github.com/abhinaba-ghosh/cypress-react-selector/issues/48)
-
 You can chain `react-selector` queries like:
+
+- combine with cypress native element `.find()` -
+
+```js
+cy.react('FormComponent').find('input').type('buy milk');
+cy.react('FormComponent').find('button').click();
+```
 
 - fetch `HTMLElements` by chained `react` queries
 
@@ -307,18 +315,20 @@ cy.getReact('MyComponent', { props: { name: 'Bob' } })
   .should('eq', '50');
 ```
 
+:warning: Fluent commands are not working in some special cases. It is being tracked [here](https://github.com/abhinaba-ghosh/cypress-react-selector/issues/41)
+
 ## Sample Tests
 
-- Checkout basic tests [here](./cypress/integration) (where React-root is passed from `waitForReact` method)
-- Checkout Complex tests [here](./cypress/component/components/ProductsList.spec.js) (React-root configured as `env` parameter)
-
-Use [React Dev Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) plugin to easily identify the react component, props and state. Have a look in the below demonstration, how I have used the tool to write the sample test cases.
+- Checkout component testing use cases [here](./component/)
+- Checkout e2e tests [here](./cypress/integration)
 
 ## Community Projects
 
-- Credit goes to [Gleb Bahmutov](https://github.com/bahmutov) for drafting how `cypress-react-selector` can be used in `react unit testing` [here](https://github.com/bahmutov/cypress-react-unit-test/blob/main/cypress/component/advanced/react-book-example/src/components/ProductsList.spec.js)
+- Credit goes to [Gleb Bahmutov](https://github.com/bahmutov) for drafting how `cypress-react-selector` can be used in `react component testing` [here](https://github.com/cypress-io/cypress/blob/develop/npm/react/cypress/component/advanced/react-book-example/src/components/ProductsList.spec.js)
 
 - Credit goes to [gregfenton](https://github.com/gregfenton) for presenting a `formik form` example that uses `Cypress-React-Selector`. Checkout the work [here](https://github.com/gregfenton/example-cypress-react-selector-formik)
+
+[If you have a cool project, feel free to portray here]
 
 ## Tool You Need
 
