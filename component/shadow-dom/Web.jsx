@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactShadowRoot from 'react-shadow-root';
 
-const App = () => {
+const Web = () => {
   return (
     <basic-demo>
       <ReactShadowRoot>
-        <div className="shadow-host">Shadow DOM Test App</div>
+        <div className="shadow-host">Shadow DOM Test Web</div>
       </ReactShadowRoot>
     </basic-demo>
   );
 };
 
-export default App;
+export default Web;

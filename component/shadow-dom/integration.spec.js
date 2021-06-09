@@ -5,20 +5,24 @@ import Web from './Web';
 
 describe('It should validate cypress react selector with shadow dom', () => {
   beforeEach(() => {
-    mount(<App />);
+    mount(
+      <div>
+        <App />
+        <Web />
+      </div>
+    );
     cy.waitForReact();
 
     // adding the shadow DOm config run-time
     Cypress.config('includeShadowDom', true);
   });
 
-  it('verify text natively', () => {
-    cy.get('.shadow-host').should('have.text', 'Shadow DOM Test App');
-  });
-
-  it('verify text with react-selector', () => {
+  it('verify text with react-selector with both components', () => {
     cy.react('App')
       .find('.shadow-host')
       .should('have.text', 'Shadow DOM Test App');
+    cy.react('Web')
+      .find('.shadow-host')
+      .should('have.text', 'Shadow DOM Test Web');
   });
 });
