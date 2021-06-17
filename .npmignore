@@ -2,3 +2,10 @@
 node_modules/
 package-lock.json
 docs
+circleci
+.guthub
+component
+cypress
+.prettierrc
+cypress.json
+
