@@ -1,6 +1,6 @@
 #### 2.3.10 (2021-06-17)
 
-#### 2.3.9 (2021-06-17)
+- added non essential folders to .npmignore to reduce the library size
 
 #### 2.3.8 (2021-06-09)
 
