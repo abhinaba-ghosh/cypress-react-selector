@@ -1,3 +1,5 @@
+#### 2.3.11 (2021-07-02)
+
 #### 2.3.10 (2021-06-17)
 
 - added non essential folders to .npmignore to reduce the library size
