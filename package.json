@@ -34,7 +34,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
-    "react-shadow-root": "^5.0.4"
+    "react-shadow-root": "^6.1.0"
   },
   "dependencies": {
     "resq": "1.10.1"
