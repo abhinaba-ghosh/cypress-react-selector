@@ -14,6 +14,9 @@ exports.waitForReact = (timeout = 10000, reactRoot) => {
     log: false,
   }).then((script) => {
     cy.window({ log: false }).then({ timeout: timeout }, (win) => {
+      if (Cypress.testingType === 'component') {
+        global.isReactLoaded = false;
+      }
       win.eval(script);
       return new Cypress.Promise.resolve(
         win.resq.waitToLoadReact(timeout, getReactRoot(reactRoot))
