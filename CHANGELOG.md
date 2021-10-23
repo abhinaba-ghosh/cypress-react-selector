@@ -1,3 +1,9 @@
+#### 2.3.12 (2021-10-23)
+
+##### Other Changes
+
+*  Reset global.isReactLoaded in component testing ([#241](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/241)) ([ff34ad62](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/ff34ad629c2f688e007ab39768bf2da0054312fc))
+
 #### 2.3.11 (2021-07-02)
 
 #### 2.3.10 (2021-06-17)
