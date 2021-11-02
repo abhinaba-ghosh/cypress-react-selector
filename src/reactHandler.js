@@ -70,7 +70,7 @@ exports.react = (subject, component, reactOpts = {}) => {
             if (getReactRoot(reactOpts.root) !== undefined) {
               elements = window.resq.resq$$(
                 component,
-                document.querySelector(getReactRoot(reactOpts.root))
+                cy.state('window').document.querySelector(getReactRoot(reactOpts.root))
               );
             } else {
               elements = window.resq.resq$$(component);
@@ -214,7 +214,7 @@ exports.getReact = (subject, component, reactOpts = {}) => {
           if (getReactRoot(reactOpts.root) !== undefined) {
             elements = window.resq.resq$$(
               component,
-              document.querySelector(getReactRoot(reactOpts.root))
+              cy.state('window').document.querySelector(getReactRoot(reactOpts.root))
             );
           } else {
             elements = window.resq.resq$$(component);
