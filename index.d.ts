@@ -26,8 +26,13 @@ declare namespace Cypress {
      *
      * @param timeout
      * @param reactRoot
+     * @param resqModulePath
      */
-    waitForReact(timeout?: number, reactRoot?: string): void;
+    waitForReact(
+      timeout?: number,
+      reactRoot?: string,
+      resqModulePath?: string
+    ): void;
 
     /**
      * Get react elements by component, props and states
