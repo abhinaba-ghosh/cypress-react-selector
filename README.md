@@ -133,6 +133,19 @@ before(() => {
 });
 ```
 
+_NOTE_: If you are using Webpack with your project, you may need to manually pass in the [resq](https://www.npmjs.com/package/resq) module path.
+
+There's an optional parameter in `waitForReact` that can be passed in at runtime.
+
+This should be the path of the `resq` entrypoint
+
+```js
+before(() => {
+  cy.visit('http://localhost:3000/myApp');
+  cy.waitForReact(1000, '#root', 'node_modules/resq/dist/index.js'); // Manually passing in the resq module path
+});
+```
+
 ### Find Element by React Component
 
 You should have [React Develop Tool](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) installed to spy and find out the component name as sometimes components can go though modifications. Once the React gets loaded, you can easily identify an web element by react component name:
