@@ -5,12 +5,15 @@ const { getReactRoot } = require('./utils');
  * @param {*} timeout
  * @param {*} reactRoot
  */
-exports.waitForReact = (timeout = 10000, reactRoot) => {
+exports.waitForReact = (timeout = 10000, reactRoot, resqModulePath) => {
   const file = require.hasOwnProperty('resolve')
     ? require.resolve('resq')
     : 'node_modules/resq/dist/index.js';
 
-  cy.readFile(file, 'utf8', {
+  // If the user passes in a resq path, use that instead
+  const resqPath = resqModulePath || file;
+
+  cy.readFile(resqPath, 'utf8', {
     log: false,
   }).then((script) => {
     cy.window({ log: false }).then({ timeout: timeout }, (win) => {
