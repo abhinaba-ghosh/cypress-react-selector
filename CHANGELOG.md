@@ -1,3 +1,9 @@
+#### 2.3.15 (2022-01-20)
+
+##### New Features
+
+*  Add extra param to waitForReact ([#273](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/273)) ([#279](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/279)) ([1c6a7f91](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/1c6a7f91c521e0ee3c8d68c6c7a1eeefd044925e))
+
 #### 2.3.13 (2021-11-02)
 
 - updated resq to 1.10.2
