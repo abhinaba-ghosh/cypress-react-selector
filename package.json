@@ -24,7 +24,7 @@
   "devDependencies": {
     "@cypress/react": "^5.3.2",
     "@cypress/webpack-dev-server": "^1.1.2",
-    "cypress": "9.3.1",
+    "cypress": "9.4.1",
     "generate-changelog": "^1.8.0",
     "html-webpack-plugin": "4",
     "husky": "7.0.4",
