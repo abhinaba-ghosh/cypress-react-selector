@@ -95,12 +95,18 @@ exports.react = (subject, component, reactOpts = {}) => {
           elements.forEach((elm) => {
             var node = elm.node,
               isFragment = elm.isFragment;
+            if (!node) {
+              return;
+            }
             if (isFragment) {
               nodes = nodes.concat(node);
             } else {
               nodes.push(node);
             }
           });
+          if (!nodes.length) {
+            return null;
+          }
 
           return nodes;
         }
@@ -231,6 +237,7 @@ exports.getReact = (subject, component, reactOpts = {}) => {
             exact: reactOpts.exact,
           });
         }
+        elements = elements.filter(Boolean);
         if (!elements.length) {
           return null;
         }
