@@ -7,6 +7,7 @@ class AProduct extends React.Component {
     this.state = {
       myName: props.name,
       orderCount: 0,
+      orderValue: 1234n,
     };
   }
 
