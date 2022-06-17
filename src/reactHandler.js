@@ -145,9 +145,7 @@ exports.react = (subject, component, reactOpts = {}) => {
     });
   };
 
-  return resolveValue().then((value) => {
-    return value;
-  });
+  return resolveValue();
 };
 
 /**
@@ -273,9 +271,7 @@ exports.getReact = (subject, component, reactOpts = {}) => {
     });
   };
 
-  return resolveValue().then((value) => {
-    return value;
-  });
+  return resolveValue();
 };
 
 /**
