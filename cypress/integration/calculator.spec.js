@@ -57,4 +57,16 @@ describe('It should validate cypress react selector', () => {
       .getProps('name')
       .should('eq', '5');
   });
+
+  it('getReact should retry upcoming assertions', () => {
+    const assertFn = cy.stub().returns(false);
+    assertFn.onCall(5).returns(true);
+
+    cy.getReact('t', { options: { timeout: 1000 } }).should(() => {
+      // should retry 10 times
+
+      const value = assertFn();
+      expect(value).to.equal(true); // this should ultimately succeed at the 5th retry
+    });
+  });
 });

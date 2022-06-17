@@ -153,5 +153,32 @@ describe('Selecting by React props and state', () => {
         props: { name: 'Second item' },
       }).should('have.length', '1');
     });
+
+    it('retries until timeout or upcoming assertions succeed', () => {
+      cy.stub(window, 'fetch')
+        .withArgs('http://myapi.com/products')
+        .resolves({
+          json: cy.stub().resolves({
+            products: [
+              { id: 1, name: 'First item' },
+              { id: 2, name: 'Second item' },
+            ],
+          }),
+        });
+      mount(<ProductsList />);
+
+      // to find DOM elements by React component constructor name, props, or state
+      cy.waitForReact();
+
+      const assertFn = cy.stub().returns(false);
+      assertFn.onCall(5).returns(true);
+
+      cy.getReact('ProductsContainer', { options: { timeout: 1000 } }).should(() => {
+        // should retry 10 times
+
+        const value = assertFn();
+        expect(value).to.equal(true); // this should ultimately succeed at the 5th retry
+      });
+    });
   });
 });
