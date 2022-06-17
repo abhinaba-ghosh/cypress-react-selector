@@ -69,4 +69,16 @@ describe('It should validate cypress react selector', () => {
       expect(value).to.equal(true); // this should ultimately succeed at the 5th retry
     });
   });
+
+  it('getReact should time out after failing assertions', () => {
+    cy.on('fail', (err) => {
+      if (err.message !== 'Timed out retrying after 1000ms: expected false to equal true') {
+        throw err;
+      }
+    });
+
+    cy.getReact('t', { options: { timeout: 1000 } }).should(() => {
+      expect(false).to.equal(true);
+    });
+  });
 });
