@@ -62,7 +62,7 @@ describe('It should validate cypress react selector', () => {
     const assertFn = cy.stub().returns(false);
     assertFn.onCall(5).returns(true);
 
-    cy.getReact('t').should(() => {
+    cy.getReact('t', { options: { timeout: 1000 } }).should(() => {
       // should retry 10 times
 
       const value = assertFn();
