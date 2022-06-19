@@ -114,33 +114,37 @@ exports.react = (subject, component, reactOpts = {}) => {
   };
 
   const resolveValue = () => {
+    const retry = () => {
+      if (retries < 1) {
+        cy.log(
+          getComponentNotFoundMessage(
+            component,
+            reactOpts.props,
+            reactOpts.state
+          )
+        );
+        return;
+      }
+
+      return cy
+        .wait(retryInterval, {
+          log: false,
+        })
+        .then(() => {
+          retries--;
+          return resolveValue();
+        });
+    };
+
     return _nodes().then((value) => {
       if (!value) {
-        if (retries < 1) {
-          cy.log(
-            getComponentNotFoundMessage(
-              component,
-              reactOpts.props,
-              reactOpts.state
-            )
-          );
-          return;
-        }
-
-        return cy
-          .wait(retryInterval, {
-            log: false,
-          })
-          .then(() => {
-            retries--;
-            return resolveValue();
-          });
+        return retry();
       }
       if (!isPrimitive(value)) {
         value = Cypress.$(value);
       }
       return cy.verifyUpcomingAssertions(value, (reactOpts || {}).options, {
-        onRetry: resolveValue,
+        onRetry: retry,
       });
     });
   };
@@ -243,30 +247,35 @@ exports.getReact = (subject, component, reactOpts = {}) => {
       }
     );
   };
+
   const resolveValue = () => {
+    const retry = () => {
+      if (retries < 1) {
+        cy.log(
+          getComponentNotFoundMessage(
+            component,
+            reactOpts.props,
+            reactOpts.state
+          )
+        );
+        return;
+      }
+      return cy
+        .wait(retryInterval, {
+          log: false,
+        })
+        .then(() => {
+          retries--;
+          return resolveValue();
+        });
+    };
+
     return _nodes().then((value) => {
       if (!value) {
-        if (retries < 1) {
-          cy.log(
-            getComponentNotFoundMessage(
-              component,
-              reactOpts.props,
-              reactOpts.state
-            )
-          );
-          return;
-        }
-        return cy
-          .wait(retryInterval, {
-            log: false,
-          })
-          .then(() => {
-            retries--;
-            return resolveValue();
-          });
+        return retry();
       }
       return cy.verifyUpcomingAssertions(value, (reactOpts || {}).options, {
-        onRetry: resolveValue,
+        onRetry: retry,
       });
     });
   };
