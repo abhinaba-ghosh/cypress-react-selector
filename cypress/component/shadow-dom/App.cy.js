@@ -1,11 +1,9 @@
-import { mount } from '@cypress/react';
 import React from 'react';
 import App from './App';
-import Web from './Web';
 
 describe('It should validate cypress react selector with shadow dom', () => {
   beforeEach(() => {
-    mount(<App />);
+    cy.mount(<App />);
     cy.waitForReact();
 
     // adding the shadow DOm config run-time
