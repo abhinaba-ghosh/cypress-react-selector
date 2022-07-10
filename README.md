@@ -5,6 +5,8 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![NPM Downloads](https://img.shields.io/npm/dt/cypress-react-selector.svg?style=flat-square)](https://www.npmjs.com/package/cypress-react-selector)
 
+:warning: cypress-react-selector 3.x supports cypress 10+
+
 _cypress-react-selector_ is a lightweight plugin to help you to locate web elements in your REACT app using components, props and states. This extension allow you to select elements in a way that is native to React. Designed to help developers in component, integration and E2E testing.
 
 Internally, cypress-react-selector uses a library called [resq](https://github.com/baruchvlz/resq) to query React's VirtualDOM in order to retrieve the nodes.
