@@ -1,3 +1,9 @@
+## 3.0.0 (2022-07-10)
+
+##### New Features
+
+*  update to cypress 10.2.0 ([#345](https://github.com/abhinaba-ghosh/cypress-react-selector/pull/345)) ([d715750c](https://github.com/abhinaba-ghosh/cypress-react-selector/commit/d715750ccd05b9f0dc55c99f547cf627d9b97ad1))
+
 #### 2.3.20 (2022-06-19)
 
 #### 2.3.19 (2022-06-17)
