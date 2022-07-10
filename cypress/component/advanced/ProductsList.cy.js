@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
-import { mount } from '@cypress/react';
 import React from 'react';
-import ProductsList from './ProductsList.jsx';
+import ProductsList from './ProductsList';
 
 // test similar to
 // https://github.com/softchris/react-book/blob/7bd767bb39f59977b107d07f383a8f4e32a12857/Testing/test-demo/src/Components/__tests__/ProductsList.js
@@ -18,10 +17,10 @@ describe('Selecting by React props and state', () => {
             ],
           }),
         });
-      mount(<ProductsList />);
+      cy.mount(<ProductsList />);
 
       // to find DOM elements by React component constructor name, props, or state
-      cy.waitForReact();
+      cy.waitForReact(1000);
     });
 
     it('renders products', () => {
@@ -135,7 +134,7 @@ describe('Selecting by React props and state', () => {
         .withArgs('http://myapi.com/products')
         // simulate slow load by delaying the response
         .resolves(Cypress.Promise.resolve(response).delay(1000));
-      mount(<ProductsList />);
+      cy.mount(<ProductsList />);
 
       // to find DOM elements by React component constructor name, props, or state
       cy.waitForReact();
@@ -165,7 +164,7 @@ describe('Selecting by React props and state', () => {
             ],
           }),
         });
-      mount(<ProductsList />);
+      cy.mount(<ProductsList />);
 
       // to find DOM elements by React component constructor name, props, or state
       cy.waitForReact();
@@ -173,12 +172,14 @@ describe('Selecting by React props and state', () => {
       const assertFn = cy.stub().returns(false);
       assertFn.onCall(5).returns(true);
 
-      cy.getReact('ProductsContainer', { options: { timeout: 1000 } }).should(() => {
-        // should retry 10 times
+      cy.getReact('ProductsContainer', { options: { timeout: 1000 } }).should(
+        () => {
+          // should retry 10 times
 
-        const value = assertFn();
-        expect(value).to.equal(true); // this should ultimately succeed at the 5th retry
-      });
+          const value = assertFn();
+          expect(value).to.equal(true); // this should ultimately succeed at the 5th retry
+        }
+      );
     });
   });
 });

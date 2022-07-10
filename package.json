@@ -22,9 +22,9 @@
   "author": "Abhinaba Ghosh <askabhinaba@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@cypress/react": "^5.3.2",
-    "@cypress/webpack-dev-server": "^1.1.2",
-    "cypress": "9.7.0",
+    "@cypress/react": "^6.0.0",
+    "@cypress/webpack-dev-server": "^2.0.0",
+    "cypress": "10.2.0",
     "generate-changelog": "^1.8.0",
     "html-webpack-plugin": "4",
     "husky": "8.0.1",

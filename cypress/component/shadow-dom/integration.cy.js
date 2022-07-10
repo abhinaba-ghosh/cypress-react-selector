@@ -1,11 +1,10 @@
-import { mount } from '@cypress/react';
 import React from 'react';
 import App from './App';
 import Web from './Web';
 
 describe('It should validate cypress react selector with shadow dom', () => {
   beforeEach(() => {
-    mount(
+    cy.mount(
       <div>
         <App />
         <Web />

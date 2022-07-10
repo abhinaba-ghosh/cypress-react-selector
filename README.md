@@ -39,18 +39,28 @@ Internally, cypress-react-selector uses a library called [resq](https://github.c
 ### Add as a dependency:
 
 ```sh
-npm i --save cypress-react-selector
+npm i --save-dev cypress-react-selector
 ```
 
 ### Include the commands
 
-Update `Cypress/support/index.js` file to include the cypress-react-selector commands by adding:
+Update `cypress/support/e2e.js` and `cypress/support/component.js` file to include the cypress-react-selector commands by adding:
 
 ```js
 import 'cypress-react-selector';
 ```
 
+### Update `component-index.html` (Component Testing only)
+
+In order for `waitForReact()` to work appropriately in component testing, replace the `div` inside `component-index.html` with this:
+
+```js
+<div id="__cy_root" data-cy-root></div>
+```
+
 ### TSConfig Settings for types
+
+Add the following to `tsconfig.json`:
 
 ```js
 {
@@ -60,6 +70,40 @@ import 'cypress-react-selector';
   }
 }
 ```
+
+### Configuring >= Cypress 10
+
+The following is a sample `cypress.config.js` file that sets up Cypress e2e and component testing to work with this plugin:
+
+```js
+const { defineConfig } = require('cypress');
+
+module.exports = defineConfig({
+  video: false,
+  screenshotOnRunFailure: false,
+  env: {
+    'cypress-react-selector': {
+      root: '#__cy_root',
+    },
+  },
+  e2e: {
+    setupNodeEvents() {},
+    specPattern: 'cypress/e2e/**/*.cy.{js,ts,jsx,tsx}',
+    excludeSpecPattern: ['**/__snapshots__/*', '**/__image_snapshots__/*'],
+  },
+  component: {
+    setupNodeEvents() {},
+    specPattern: 'cypress/component/**/*.cy.{js,ts,jsx,tsx}',
+    excludeSpecPattern: ['**/__snapshots__/*', '**/__image_snapshots__/*'],
+    devServer: {
+      framework: 'create-react-app',
+      bundler: 'webpack',
+    },
+  },
+});
+```
+
+**Note:** if you're not using `component` testing, you can remove that from the config.
 
 ## Highlights
 
@@ -110,7 +154,7 @@ before(() => {
 
 _NOTE_ : The Best Configuration for React root is to declare it as an `env` variable
 
-We always recommend to declare the `react root` as a `env` variable in the `cypress.json` file. It is a best approach rather than passing react root information to `waitForReact` method every time.
+We always recommend to declare the `react root` as a `env` variable in the `cypress.config.js` file. It is a best approach rather than passing react root information to `waitForReact` method every time.
 
 As an example:
 
@@ -277,7 +321,7 @@ cy.getReact('MyTextInput', {
 
 ## Timeouts
 
-You can configure the [timeouts](https://docs.cypress.io/guides/references/configuration.html#Timeouts) in the `cypress.json` configuration file. Alternatively, you can also pass the `timeout` as a object literal in the react commands like,
+You can configure the [timeouts](https://docs.cypress.io/guides/references/configuration.html#Timeouts) in the `cypress.config.js` configuration file. Alternatively, you can also pass the `timeout` as a object literal in the react commands like,
 
 ```js
 cy.react('MyComponent', { options: { timeout: 50000 } });
