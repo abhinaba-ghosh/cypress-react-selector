@@ -37,7 +37,7 @@
     "react-shadow-root": "^6.1.0"
   },
   "dependencies": {
-    "resq": "1.10.2"
+    "resq": "1.11.0"
   },
   "repository": {
     "type": "git",
